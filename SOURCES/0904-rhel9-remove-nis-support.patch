@@ -1,0 +1,297 @@
+From fde1c60f1e87383596ee7060f4d748675b2efae9 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
+Date: Wed, 9 Jun 2021 13:59:01 +0200
+Subject: [PATCH 4/4] rhel9: remove nis support
+
+NIS is no longer supported in RHEL9.
+---
+ profiles/Makefile.am                | 14 -----
+ profiles/nis/dconf-db               |  3 -
+ profiles/nis/dconf-locks            |  2 -
+ profiles/nis/nsswitch.conf          | 14 -----
+ profiles/nis/postlogin              |  4 --
+ rpm/authselect.spec.in              | 11 ----
+ src/compat/authcompat.py.in.in      | 95 -----------------------------
+ src/compat/authcompat_Options.py    |  8 ++-
+ src/man/authselect-migration.7.adoc |  2 +-
+ 9 files changed, 6 insertions(+), 147 deletions(-)
+ delete mode 100644 profiles/nis/dconf-db
+ delete mode 100644 profiles/nis/dconf-locks
+ delete mode 100644 profiles/nis/nsswitch.conf
+ delete mode 100644 profiles/nis/postlogin
+
+diff --git a/profiles/Makefile.am b/profiles/Makefile.am
+index 7191b2604ca2c9ebaba3a4f1beb950e7d0e03970..4ab613f42a581df02c427636a0070092b58ec418 100644
+--- a/profiles/Makefile.am
++++ b/profiles/Makefile.am
+@@ -15,20 +15,6 @@ dist_profile_minimal_DATA = \
+     $(top_srcdir)/profiles/minimal/dconf-locks \
+     $(NULL)
+ 
+-profile_nisdir = $(authselect_profile_dir)/nis
+-dist_profile_nis_DATA = \
+-    $(top_srcdir)/profiles/nis/nsswitch.conf \
+-    $(top_srcdir)/profiles/nis/password-auth \
+-    $(top_srcdir)/profiles/nis/postlogin \
+-    $(top_srcdir)/profiles/nis/README \
+-    $(top_srcdir)/profiles/nis/REQUIREMENTS \
+-    $(top_srcdir)/profiles/nis/smartcard-auth \
+-    $(top_srcdir)/profiles/nis/system-auth \
+-    $(top_srcdir)/profiles/nis/fingerprint-auth \
+-    $(top_srcdir)/profiles/nis/dconf-db \
+-    $(top_srcdir)/profiles/nis/dconf-locks \
+-    $(NULL)
+-
+ profile_sssddir = $(authselect_profile_dir)/sssd
+ dist_profile_sssd_DATA = \
+     $(top_srcdir)/profiles/sssd/nsswitch.conf \
+diff --git a/profiles/nis/dconf-db b/profiles/nis/dconf-db
+deleted file mode 100644
+index bd32b2819f66acdc75ab0fc522ec85673d10ed72..0000000000000000000000000000000000000000
+--- a/profiles/nis/dconf-db
++++ /dev/null
+@@ -1,3 +0,0 @@
+-[org/gnome/login-screen]
+-enable-smartcard-authentication=false
+-enable-fingerprint-authentication={if "with-fingerprint":true|false}
+diff --git a/profiles/nis/dconf-locks b/profiles/nis/dconf-locks
+deleted file mode 100644
+index 8a36fa9568344338272786394aece872185d0ab3..0000000000000000000000000000000000000000
+--- a/profiles/nis/dconf-locks
++++ /dev/null
+@@ -1,2 +0,0 @@
+-/org/gnome/login-screen/enable-smartcard-authentication
+-/org/gnome/login-screen/enable-fingerprint-authentication
+diff --git a/profiles/nis/nsswitch.conf b/profiles/nis/nsswitch.conf
+deleted file mode 100644
+index 9bee7d839f84ff39d54cb6ead9dea38e51736b4d..0000000000000000000000000000000000000000
+--- a/profiles/nis/nsswitch.conf
++++ /dev/null
+@@ -1,14 +0,0 @@
+-aliases:    files nis                   {exclude if "with-custom-aliases"}
+-automount:  files nis                   {exclude if "with-custom-automount"}
+-ethers:     files nis                   {exclude if "with-custom-ethers"}
+-group:      files nis systemd           {exclude if "with-custom-group"}
+-hosts:      files nis dns myhostname    {exclude if "with-custom-hosts"}
+-initgroups: files nis                   {exclude if "with-custom-initgroups"}
+-netgroup:   files nis                   {exclude if "with-custom-netgroup"}
+-networks:   files nis                   {exclude if "with-custom-networks"}
+-passwd:     files nis systemd           {exclude if "with-custom-passwd"}
+-protocols:  files nis                   {exclude if "with-custom-protocols"}
+-publickey:  files nis                   {exclude if "with-custom-publickey"}
+-rpc:        files nis                   {exclude if "with-custom-rpc"}
+-services:   files nis                   {exclude if "with-custom-services"}
+-shadow:     files nis                   {exclude if "with-custom-shadow"}
+diff --git a/profiles/nis/postlogin b/profiles/nis/postlogin
+deleted file mode 100644
+index 04a11f049bc1e220c9064fba7b46eb243ddd4996..0000000000000000000000000000000000000000
+--- a/profiles/nis/postlogin
++++ /dev/null
+@@ -1,4 +0,0 @@
+-session     optional                   pam_umask.so silent
+-session     [success=1 default=ignore] pam_succeed_if.so service !~ gdm* service !~ su* quiet
+-session     [default=1]                pam_lastlog.so nowtmp {if "with-silent-lastlog":silent|showfailed}
+-session     optional                   pam_lastlog.so silent noupdate showfailed
+diff --git a/rpm/authselect.spec.in b/rpm/authselect.spec.in
+index f8539d5a028da1a7184b47609a8efdb5ce0be14e..95da183a41a29f7913a0a255a94070908ed9a66c 100644
+--- a/rpm/authselect.spec.in
++++ b/rpm/authselect.spec.in
+@@ -165,7 +165,6 @@ find $RPM_BUILD_ROOT -name "*.a" -exec %__rm -f {} \;
+ %dir %{_datadir}/authselect/vendor
+ %dir %{_datadir}/authselect/default
+ %dir %{_datadir}/authselect/default/minimal/
+-%dir %{_datadir}/authselect/default/nis/
+ %dir %{_datadir}/authselect/default/sssd/
+ %dir %{_datadir}/authselect/default/winbind/
+ %{_datadir}/authselect/default/minimal/dconf-db
+@@ -178,16 +177,6 @@ find $RPM_BUILD_ROOT -name "*.a" -exec %__rm -f {} \;
+ %{_datadir}/authselect/default/minimal/REQUIREMENTS
+ %{_datadir}/authselect/default/minimal/smartcard-auth
+ %{_datadir}/authselect/default/minimal/system-auth
+-%{_datadir}/authselect/default/nis/dconf-db
+-%{_datadir}/authselect/default/nis/dconf-locks
+-%{_datadir}/authselect/default/nis/fingerprint-auth
+-%{_datadir}/authselect/default/nis/nsswitch.conf
+-%{_datadir}/authselect/default/nis/password-auth
+-%{_datadir}/authselect/default/nis/postlogin
+-%{_datadir}/authselect/default/nis/README
+-%{_datadir}/authselect/default/nis/REQUIREMENTS
+-%{_datadir}/authselect/default/nis/smartcard-auth
+-%{_datadir}/authselect/default/nis/system-auth
+ %{_datadir}/authselect/default/sssd/dconf-db
+ %{_datadir}/authselect/default/sssd/dconf-locks
+ %{_datadir}/authselect/default/sssd/fingerprint-auth
+diff --git a/src/compat/authcompat.py.in.in b/src/compat/authcompat.py.in.in
+index 55e205bae2c0b1f7892f8b286c288dfeaa26a60d..c6d1f2786c233f7ebdbfe5f2503aa0016012aee0 100755
+--- a/src/compat/authcompat.py.in.in
++++ b/src/compat/authcompat.py.in.in
+@@ -243,20 +243,6 @@ class Configuration:
+ 
+             config.write(keys)
+ 
+-    class Network(Base):
+-        def __init__(self, options):
+-            super(Configuration.Network, self).__init__(options)
+-
+-        def write(self):
+-            nisdomain = self.get("nisdomain")
+-            config = EnvironmentFile(Path.System('network'))
+-
+-            if nisdomain is None:
+-                return
+-
+-            config.set("NISDOMAIN", nisdomain)
+-            config.write()
+-
+     class SSSD(Base):
+         def __init__(self, options):
+             super(Configuration.SSSD, self).__init__(options, ServiceName="sssd")
+@@ -378,83 +364,6 @@ class Configuration:
+             # other applications may depend on it.
+             return
+ 
+-    class NIS(Base):
+-        def __init__(self, options):
+-            super(Configuration.NIS, self).__init__(options)
+-            self.rpcbind = Service("rpcbind")
+-            self.ypbind = Service("ypbind")
+-
+-        def isEnabled(self):
+-            if not self.isset("nis"):
+-                return None
+-
+-            return self.getBool("nis")
+-
+-        def enableService(self, nostart):
+-            if not self.isset("nisdomain"):
+-                return
+-
+-            nisdom = self.get("nisdomain")
+-
+-            if not nostart:
+-                cmd = Command(Path.System('cmd-domainname'), [nisdom])
+-                cmd.run()
+-
+-            cmd = Command(Path.System('cmd-setsebool'),
+-                          ['-P', 'allow_ypbind', '1'])
+-            cmd.run()
+-
+-            self.rpcbind.enable()
+-            self.ypbind.enable()
+-
+-            if not nostart:
+-                self.rpcbind.start(Restart=False)
+-                self.ypbind.start()
+-
+-        def disableService(self, nostop):
+-            if not nostop:
+-                cmd = Command(Path.System('cmd-domainname'), ["(none)"])
+-                cmd.run()
+-
+-            cmd = Command(Path.System('cmd-setsebool'),
+-                          ['-P', 'allow_ypbind', '0'])
+-            cmd.run()
+-
+-            self.rpcbind.disable()
+-            self.ypbind.disable()
+-
+-            if not nostop:
+-                self.rpcbind.stop()
+-                self.ypbind.stop()
+-
+-        def write(self):
+-            if not self.isset("nisdomain"):
+-                return
+-
+-            output = "domain " + self.get("nisdomain")
+-
+-            additional_servers = []
+-            if self.isset("nisserver"):
+-                servers = self.get("nisserver").split(",")
+-                additional_servers = servers[1:]
+-                output += " server " + servers[0] + "\n"
+-            else:
+-                output += " broadcast\n"
+-
+-            for server in additional_servers:
+-                output += "ypserver " + server + "\n"
+-
+-            filename = Path.System('yp.conf')
+-            if self.getBool("test-call"):
+-                print("========== BEGIN Content of [%s] ==========" % filename)
+-                print(output)
+-                print("========== END   Content of [%s] ==========\n" % filename)
+-                return
+-
+-            with open(filename, "w") as f:
+-                f.write(output)
+-
+-
+ class AuthCompat:
+     def __init__(self):
+         self.sysconfig = EnvironmentFile(Path.System('authconfig'))
+@@ -538,8 +447,6 @@ class AuthCompat:
+                 or self.options.getBool("sssd")
+                 or self.options.getBool("sssdauth")):
+             profile = "sssd"
+-        elif self.options.getBool("nis"):
+-            profile = "nis"
+         elif self.options.getBool("winbind"):
+             profile = "winbind"
+ 
+@@ -596,13 +503,11 @@ class AuthCompat:
+     def writeConfiguration(self):
+         configs = [
+             Configuration.LDAP(self.options),
+-            Configuration.Network(self.options),
+             Configuration.Kerberos(self.options),
+             Configuration.SSSD(self.options),
+             Configuration.Winbind(self.options),
+             Configuration.PWQuality(self.options),
+             Configuration.MakeHomedir(self.options),
+-            Configuration.NIS(self.options)
+         ]
+ 
+         for config in configs:
+diff --git a/src/compat/authcompat_Options.py b/src/compat/authcompat_Options.py
+index 5c8b21b55014198d6d9dfc98bd807c3c922b06f4..79ead60fa9edc1244227e3b69df025471b7c7991 100644
+--- a/src/compat/authcompat_Options.py
++++ b/src/compat/authcompat_Options.py
+@@ -79,9 +79,6 @@ class Options:
+         # However, they will just make sure that an authentication against
+         # expected service is working. They may not result in the exact same
+         # configuration as authconfig would generate.
+-        Option.Feature("nis", _("NIS for user information by default")),
+-        Option.Valued("nisdomain", _("<domain>"), _("default NIS domain")),
+-        Option.Valued("nisserver", _("<server>"), _("default NIS server")),
+         Option.Feature("ldap", _("LDAP for user information by default")),
+         Option.Feature("ldapauth", _("LDAP for authentication by default")),
+         Option.Valued("ldapserver", _("<server>"), _("default LDAP server hostname or URI")),
+@@ -164,6 +161,11 @@ class Options:
+         Option.UnsupportedFeature("locauthorize"),
+         Option.UnsupportedFeature("sysnetauth"),
+         Option.UnsupportedValued("faillockargs", _("<options>")),
++
++        # NIS is no longer supported
++        Option.UnsupportedFeature("nis"),
++        Option.UnsupportedValued("nisdomain", _("<domain>")),
++        Option.UnsupportedValued("nisserver", _("<server>")),
+     ]
+ 
+     Map = {
+diff --git a/src/man/authselect-migration.7.adoc b/src/man/authselect-migration.7.adoc
+index 888cd4e5a0750d4e1aa5898887f5f7fd42472741..d9777b9b473859d7ec532f39f7e14bd81c4f1b90 100644
+--- a/src/man/authselect-migration.7.adoc
++++ b/src/man/authselect-migration.7.adoc
+@@ -72,7 +72,7 @@ configuration file for required services.
+ |--enablesssd --enablesssdauth       |sssd
+ |--enablekrb5                        |sssd
+ |--enablewinbind --enablewinbindauth |winbind
+-|--enablenis                         |nis
++|--enablenis                         |none
+ |=========================================================
+ 
+ .Relation of authconfig options to authselect profile features
+-- 
+2.34.1
+
