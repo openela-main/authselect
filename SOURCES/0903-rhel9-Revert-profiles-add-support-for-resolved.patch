@@ -1,0 +1,42 @@
+From 6381b49e90b3850fade68c8af03b17d0cc016d3c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
+Date: Wed, 25 Nov 2020 14:05:00 +0100
+Subject: [PATCH 3/4] rhel9: Revert "profiles: add support for resolved"
+
+systemd-resolved should not be enabled by default on rhel8.
+
+This reverts commit c5294c508a940291440eb32d5d750f33baf1ae54.
+---
+ profiles/minimal/nsswitch.conf | 2 +-
+ profiles/nis/nsswitch.conf     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/profiles/minimal/nsswitch.conf b/profiles/minimal/nsswitch.conf
+index a9e4bc79a1090304542ccd8b43d1107eeb5304df..a39e4d32ebf79e8bf05f2db5753b01596222dc35 100644
+--- a/profiles/minimal/nsswitch.conf
++++ b/profiles/minimal/nsswitch.conf
+@@ -2,7 +2,7 @@ aliases:    files                                       {exclude if "with-custom
+ automount:  files                                       {exclude if "with-custom-automount"}
+ ethers:     files                                       {exclude if "with-custom-ethers"}
+ group:      files {if "with-altfiles":altfiles }systemd {exclude if "with-custom-group"}
+-hosts:      resolve [!UNAVAIL=return] files myhostname dns {exclude if "with-custom-hosts"}
++hosts:      files dns myhostname                        {exclude if "with-custom-hosts"}
+ initgroups: files                                       {exclude if "with-custom-initgroups"}
+ netgroup:   files                                       {exclude if "with-custom-netgroup"}
+ networks:   files                                       {exclude if "with-custom-networks"}
+diff --git a/profiles/nis/nsswitch.conf b/profiles/nis/nsswitch.conf
+index 50a3ffb7431a91b88b4bfef4c09df19310fac7e7..9bee7d839f84ff39d54cb6ead9dea38e51736b4d 100644
+--- a/profiles/nis/nsswitch.conf
++++ b/profiles/nis/nsswitch.conf
+@@ -2,7 +2,7 @@ aliases:    files nis                   {exclude if "with-custom-aliases"}
+ automount:  files nis                   {exclude if "with-custom-automount"}
+ ethers:     files nis                   {exclude if "with-custom-ethers"}
+ group:      files nis systemd           {exclude if "with-custom-group"}
+-hosts:      resolve [!UNAVAIL=return] files nis myhostname dns {exclude if "with-custom-hosts"}
++hosts:      files nis dns myhostname    {exclude if "with-custom-hosts"}
+ initgroups: files nis                   {exclude if "with-custom-initgroups"}
+ netgroup:   files nis                   {exclude if "with-custom-netgroup"}
+ networks:   files nis                   {exclude if "with-custom-networks"}
+-- 
+2.34.1
+

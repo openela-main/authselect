@@ -1,0 +1,947 @@
+From f222ccb9f4d0ec1021d3117e9b91b3317722a3fe Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
+Date: Mon, 5 Dec 2022 19:03:00 +0100
+Subject: [PATCH 8/8] rhel9: Revert yescrypt
+
+(cherry picked from commit a5d390b6c2a98854c6b5a53f49e3e76e86d7eb28)
+Patch-name: 0905-rhel9-Revert-yescrypt.patch
+Patch-id: 905
+From-dist-git-commit: 8461b94b1539db7f26c288e0d5d20dd71e6609bf
+---
+ po/af.po                                        | 2 +-
+ po/authselect.pot                               | 2 +-
+ po/ca.po                                        | 2 +-
+ po/cs.po                                        | 4 ++--
+ po/de.po                                        | 4 ++--
+ po/es.po                                        | 4 ++--
+ po/fa.po                                        | 2 +-
+ po/fi.po                                        | 4 ++--
+ po/fr.po                                        | 4 ++--
+ po/hu.po                                        | 4 ++--
+ po/id.po                                        | 2 +-
+ po/it.po                                        | 4 ++--
+ po/ja.po                                        | 4 ++--
+ po/ka.po                                        | 4 ++--
+ po/ko.po                                        | 4 ++--
+ po/nl.po                                        | 4 ++--
+ po/pl.po                                        | 4 ++--
+ po/pt.po                                        | 2 +-
+ po/pt_BR.po                                     | 4 ++--
+ po/ru.po                                        | 4 ++--
+ po/si.po                                        | 2 +-
+ po/sv.po                                        | 4 ++--
+ po/tr.po                                        | 4 ++--
+ po/uk.po                                        | 4 ++--
+ po/zh_CN.po                                     | 4 ++--
+ po/zh_TW.po                                     | 4 ++--
+ profiles/minimal/password-auth                  | 2 +-
+ profiles/minimal/system-auth                    | 2 +-
+ profiles/nis/password-auth                      | 2 +-
+ profiles/nis/system-auth                        | 2 +-
+ profiles/sssd/password-auth                     | 2 +-
+ profiles/sssd/system-auth                       | 2 +-
+ profiles/winbind/password-auth                  | 2 +-
+ profiles/winbind/system-auth                    | 2 +-
+ src/compat/authcompat_Options.py                | 2 +-
+ src/man/authselect-migration.7.adoc             | 2 +-
+ src/man/po/authselect-migration.7.adoc.ca.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.cs.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.de.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.es.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.fa.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.fi.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.fr.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.hu.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.it.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.ja.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.ko.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.nl.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.pl.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.pot      | 2 +-
+ src/man/po/authselect-migration.7.adoc.pt.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.pt_BR.po | 2 +-
+ src/man/po/authselect-migration.7.adoc.ru.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.si.po    | 2 +-
+ src/man/po/authselect-migration.7.adoc.sv.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.tr.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.uk.po    | 4 ++--
+ src/man/po/authselect-migration.7.adoc.zh_CN.po | 2 +-
+ src/man/po/authselect-migration.7.adoc.zh_TW.po | 2 +-
+ 59 files changed, 87 insertions(+), 87 deletions(-)
+
+diff --git a/po/af.po b/po/af.po
+index e305029..b4f0418 100644
+--- a/po/af.po
++++ b/po/af.po
+@@ -1575,7 +1575,7 @@ msgid "<name>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/authselect.pot b/po/authselect.pot
+index ebb39b0..c308071 100644
+--- a/po/authselect.pot
++++ b/po/authselect.pot
+@@ -1535,7 +1535,7 @@ msgid "<name>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/ca.po b/po/ca.po
+index 3373e10..75d91ec 100644
+--- a/po/ca.po
++++ b/po/ca.po
+@@ -1569,7 +1569,7 @@ msgid "<name>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/cs.po b/po/cs.po
+index 48929b6..b9150b7 100644
+--- a/po/cs.po
++++ b/po/cs.po
+@@ -1600,8 +1600,8 @@ msgid "<name>"
+ msgstr "<jméno>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ # auto translated by TM merge from project: authconfig, version: master, DocId: po/authconfig
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/de.po b/po/de.po
+index 07eab1e..746d167 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -1600,8 +1600,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/es.po b/po/es.po
+index 3868023..af5cde8 100644
+--- a/po/es.po
++++ b/po/es.po
+@@ -1598,8 +1598,8 @@ msgid "<name>"
+ msgstr "<nombre>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/fa.po b/po/fa.po
+index 7776891..d74c1cd 100644
+--- a/po/fa.po
++++ b/po/fa.po
+@@ -1537,7 +1537,7 @@ msgid "<name>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/fi.po b/po/fi.po
+index 2ae32ff..7390590 100644
+--- a/po/fi.po
++++ b/po/fi.po
+@@ -1583,8 +1583,8 @@ msgid "<name>"
+ msgstr "<nimi>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/fr.po b/po/fr.po
+index a40cf4c..d526c5d 100644
+--- a/po/fr.po
++++ b/po/fr.po
+@@ -1605,8 +1605,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/hu.po b/po/hu.po
+index 758be29..e18d6bf 100644
+--- a/po/hu.po
++++ b/po/hu.po
+@@ -1590,8 +1590,8 @@ msgid "<name>"
+ msgstr "<név>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/id.po b/po/id.po
+index a83e1e2..6a7e2a7 100644
+--- a/po/id.po
++++ b/po/id.po
+@@ -1538,7 +1538,7 @@ msgid "<name>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/it.po b/po/it.po
+index 9427893..4b27ef2 100644
+--- a/po/it.po
++++ b/po/it.po
+@@ -1585,8 +1585,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/ja.po b/po/ja.po
+index fe83406..7ea9ae8 100644
+--- a/po/ja.po
++++ b/po/ja.po
+@@ -1598,8 +1598,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ # auto translated by TM merge from translation memory: authconfig, unique id: authconfig:6.2.8:authconfig:0bbce02e304562c295a1d57d66c296d3
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/ka.po b/po/ka.po
+index ef2e7c6..e19c0ab 100644
+--- a/po/ka.po
++++ b/po/ka.po
+@@ -1573,8 +1573,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/ko.po b/po/ko.po
+index 52d2cac..eb768fe 100644
+--- a/po/ko.po
++++ b/po/ko.po
+@@ -1570,8 +1570,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/nl.po b/po/nl.po
+index 1bd2a9b..ba50b52 100644
+--- a/po/nl.po
++++ b/po/nl.po
+@@ -1602,8 +1602,8 @@ msgid "<name>"
+ msgstr "<naam>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/pl.po b/po/pl.po
+index 9b6627c..13553c8 100644
+--- a/po/pl.po
++++ b/po/pl.po
+@@ -1609,8 +1609,8 @@ msgid "<name>"
+ msgstr "<nazwa>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/pt.po b/po/pt.po
+index ad02a0b..90d2aa3 100644
+--- a/po/pt.po
++++ b/po/pt.po
+@@ -1536,7 +1536,7 @@ msgid "<name>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/pt_BR.po b/po/pt_BR.po
+index a1215bb..544b8e9 100644
+--- a/po/pt_BR.po
++++ b/po/pt_BR.po
+@@ -1592,8 +1592,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/ru.po b/po/ru.po
+index 4919002..d23284d 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -1590,8 +1590,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/si.po b/po/si.po
+index 39f5a79..eaf4b3c 100644
+--- a/po/si.po
++++ b/po/si.po
+@@ -1536,7 +1536,7 @@ msgid "<name>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
+ msgstr ""
+ 
+ #: src/compat/authcompat_Options.py:149
+diff --git a/po/sv.po b/po/sv.po
+index 9292b1f..cc70f2d 100644
+--- a/po/sv.po
++++ b/po/sv.po
+@@ -1580,8 +1580,8 @@ msgid "<name>"
+ msgstr "<namn>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/tr.po b/po/tr.po
+index 9be388f..0aaa543 100644
+--- a/po/tr.po
++++ b/po/tr.po
+@@ -1589,8 +1589,8 @@ msgid "<name>"
+ msgstr "<ad>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/uk.po b/po/uk.po
+index c66594f..bc4c93b 100644
+--- a/po/uk.po
++++ b/po/uk.po
+@@ -1591,8 +1591,8 @@ msgid "<name>"
+ msgstr "<назва>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/zh_CN.po b/po/zh_CN.po
+index 75ec7d8..6c109a0 100644
+--- a/po/zh_CN.po
++++ b/po/zh_CN.po
+@@ -1559,8 +1559,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/po/zh_TW.po b/po/zh_TW.po
+index 89fefed..0562435 100644
+--- a/po/zh_TW.po
++++ b/po/zh_TW.po
+@@ -1562,8 +1562,8 @@ msgid "<name>"
+ msgstr "<name>"
+ 
+ #: src/compat/authcompat_Options.py:148
+-msgid "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
+-msgstr "<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>"
++msgid "<descrypt|bigcrypt|md5|sha256|sha512>"
++msgstr "<descrypt|bigcrypt|md5|sha256|sha512>"
+ 
+ #: src/compat/authcompat_Options.py:149
+ msgid "<URL>"
+diff --git a/profiles/minimal/password-auth b/profiles/minimal/password-auth
+index 858c21f..8c4cb37 100644
+--- a/profiles/minimal/password-auth
++++ b/profiles/minimal/password-auth
+@@ -12,7 +12,7 @@ account     required                                     pam_unix.so
+ password    requisite                                    pam_pwquality.so
+ password    [default=1 ignore=ignore success=ok]         pam_localuser.so                                       {include if "with-pwhistory"}
+ password    requisite                                    pam_pwhistory.so use_authtok                           {include if "with-pwhistory"}
+-password    sufficient                                   pam_unix.so yescrypt shadow {if not "without-nullok":nullok} use_authtok
++password    sufficient                                   pam_unix.so sha512 shadow {if not "without-nullok":nullok} use_authtok
+ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+diff --git a/profiles/minimal/system-auth b/profiles/minimal/system-auth
+index 858c21f..8c4cb37 100644
+--- a/profiles/minimal/system-auth
++++ b/profiles/minimal/system-auth
+@@ -12,7 +12,7 @@ account     required                                     pam_unix.so
+ password    requisite                                    pam_pwquality.so
+ password    [default=1 ignore=ignore success=ok]         pam_localuser.so                                       {include if "with-pwhistory"}
+ password    requisite                                    pam_pwhistory.so use_authtok                           {include if "with-pwhistory"}
+-password    sufficient                                   pam_unix.so yescrypt shadow {if not "without-nullok":nullok} use_authtok
++password    sufficient                                   pam_unix.so sha512 shadow {if not "without-nullok":nullok} use_authtok
+ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+diff --git a/profiles/nis/password-auth b/profiles/nis/password-auth
+index 56a51d9..56b19a6 100644
+--- a/profiles/nis/password-auth
++++ b/profiles/nis/password-auth
+@@ -15,7 +15,7 @@ account     required                                     pam_unix.so broken_shad
+ password    requisite                                    pam_pwquality.so {if not "with-nispwquality":local_users_only}
+ password    [default=1 ignore=ignore success=ok]         pam_localuser.so                                       {include if "with-pwhistory"}
+ password    requisite                                    pam_pwhistory.so use_authtok                           {include if "with-pwhistory"}
+-password    sufficient                                   pam_unix.so yescrypt shadow {if not "without-nullok":nullok} use_authtok nis
++password    sufficient                                   pam_unix.so sha512 shadow {if not "without-nullok":nullok} use_authtok nis
+ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+diff --git a/profiles/nis/system-auth b/profiles/nis/system-auth
+index 74cf6ec..5d5010a 100644
+--- a/profiles/nis/system-auth
++++ b/profiles/nis/system-auth
+@@ -16,7 +16,7 @@ account     required                                     pam_unix.so broken_shad
+ password    requisite                                    pam_pwquality.so {if not "with-nispwquality":local_users_only}
+ password    [default=1 ignore=ignore success=ok]         pam_localuser.so                                       {include if "with-pwhistory"}
+ password    requisite                                    pam_pwhistory.so use_authtok                           {include if "with-pwhistory"}
+-password    sufficient                                   pam_unix.so yescrypt shadow {if not "without-nullok":nullok} use_authtok nis
++password    sufficient                                   pam_unix.so sha512 shadow {if not "without-nullok":nullok} use_authtok nis
+ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+diff --git a/profiles/sssd/password-auth b/profiles/sssd/password-auth
+index 5b235de..b64f048 100644
+--- a/profiles/sssd/password-auth
++++ b/profiles/sssd/password-auth
+@@ -24,7 +24,7 @@ account     required                                     pam_permit.so
+ password    requisite                                    pam_pwquality.so local_users_only
+ password    [default=1 ignore=ignore success=ok]         pam_localuser.so                                       {include if "with-pwhistory"}
+ password    requisite                                    pam_pwhistory.so use_authtok                           {include if "with-pwhistory"}
+-password    sufficient                                   pam_unix.so yescrypt shadow {if not "without-nullok":nullok} use_authtok
++password    sufficient                                   pam_unix.so sha512 shadow {if not "without-nullok":nullok} use_authtok
+ password    [success=1 default=ignore]                   pam_localuser.so
+ password    sufficient                                   pam_sss.so use_authtok
+ password    required                                     pam_deny.so
+diff --git a/profiles/sssd/system-auth b/profiles/sssd/system-auth
+index 22e87d8..d338719 100644
+--- a/profiles/sssd/system-auth
++++ b/profiles/sssd/system-auth
+@@ -31,7 +31,7 @@ account     required                                     pam_permit.so
+ password    requisite                                    pam_pwquality.so local_users_only
+ password    [default=1 ignore=ignore success=ok]         pam_localuser.so                                       {include if "with-pwhistory"}
+ password    requisite                                    pam_pwhistory.so use_authtok                           {include if "with-pwhistory"}
+-password    sufficient                                   pam_unix.so yescrypt shadow {if not "without-nullok":nullok} use_authtok
++password    sufficient                                   pam_unix.so sha512 shadow {if not "without-nullok":nullok} use_authtok
+ password    [success=1 default=ignore]                   pam_localuser.so
+ password    sufficient                                   pam_sss.so use_authtok
+ password    required                                     pam_deny.so
+diff --git a/profiles/winbind/password-auth b/profiles/winbind/password-auth
+index 8b260fa..4944b42 100644
+--- a/profiles/winbind/password-auth
++++ b/profiles/winbind/password-auth
+@@ -21,7 +21,7 @@ account     required                                     pam_permit.so
+ password    requisite                                    pam_pwquality.so local_users_only
+ password    [default=1 ignore=ignore success=ok]         pam_localuser.so                                       {include if "with-pwhistory"}
+ password    requisite                                    pam_pwhistory.so use_authtok                           {include if "with-pwhistory"}
+-password    sufficient                                   pam_unix.so yescrypt shadow {if not "without-nullok":nullok} use_authtok
++password    sufficient                                   pam_unix.so sha512 shadow {if not "without-nullok":nullok} use_authtok
+ password    sufficient                                   pam_winbind.so {if "with-krb5":krb5_auth} use_authtok
+ password    required                                     pam_deny.so
+ 
+diff --git a/profiles/winbind/system-auth b/profiles/winbind/system-auth
+index 33aa13e..afe27d7 100644
+--- a/profiles/winbind/system-auth
++++ b/profiles/winbind/system-auth
+@@ -22,7 +22,7 @@ account     required                                     pam_permit.so
+ password    requisite                                    pam_pwquality.so local_users_only
+ password    [default=1 ignore=ignore success=ok]         pam_localuser.so                                       {include if "with-pwhistory"}
+ password    requisite                                    pam_pwhistory.so use_authtok                           {include if "with-pwhistory"}
+-password    sufficient                                   pam_unix.so yescrypt shadow {if not "without-nullok":nullok} use_authtok
++password    sufficient                                   pam_unix.so sha512 shadow {if not "without-nullok":nullok} use_authtok
+ password    sufficient                                   pam_winbind.so {if "with-krb5":krb5_auth} use_authtok
+ password    required                                     pam_deny.so
+ 
+diff --git a/src/compat/authcompat_Options.py b/src/compat/authcompat_Options.py
+index 79ead60..5b80b80 100644
+--- a/src/compat/authcompat_Options.py
++++ b/src/compat/authcompat_Options.py
+@@ -142,7 +142,7 @@ class Options:
+         Option.UnsupportedSwitch("useshadow"),
+         Option.UnsupportedFeature("md5"),
+         Option.UnsupportedSwitch("usemd5"),
+-        Option.UnsupportedValued("passalgo", _("<descrypt|bigcrypt|md5|sha256|sha512|yescrypt>")),
++        Option.UnsupportedValued("passalgo", _("<descrypt|bigcrypt|md5|sha256|sha512>")),
+         Option.UnsupportedValued("ldaploadcacert", _("<URL>")),
+         Option.UnsupportedValued("smartcardmodule", _("<module>")),
+         Option.UnsupportedValued("smbsecurity", _("<user|server|domain|ads>")),
+diff --git a/src/man/authselect-migration.7.adoc b/src/man/authselect-migration.7.adoc
+index d9777b9..9e3021a 100644
+--- a/src/man/authselect-migration.7.adoc
++++ b/src/man/authselect-migration.7.adoc
+@@ -90,7 +90,7 @@ configuration file for required services.
+ 
+ NOTE: Authconfig options `--enableshadow` and `--passalgo=sha512` were often
+ used to make sure that passwords are stored in `/etc/shadow` using `sha512`
+-algorithm. *The authselect profiles now use the yescrypt hashing method* and
++algorithm. *The authselect profiles now use the sha512 hashing method* and
+ it cannot be changed through an option (only by creating a custom profile).
+ You can just omit these options.
+ 
+diff --git a/src/man/po/authselect-migration.7.adoc.ca.po b/src/man/po/authselect-migration.7.adoc.ca.po
+index 08b11b7..12f14d6 100644
+--- a/src/man/po/authselect-migration.7.adoc.ca.po
++++ b/src/man/po/authselect-migration.7.adoc.ca.po
+@@ -185,7 +185,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.cs.po b/src/man/po/authselect-migration.7.adoc.cs.po
+index d11809b..caf570b 100644
+--- a/src/man/po/authselect-migration.7.adoc.cs.po
++++ b/src/man/po/authselect-migration.7.adoc.cs.po
+@@ -242,7 +242,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.de.po b/src/man/po/authselect-migration.7.adoc.de.po
+index c166a0f..fff88c8 100644
+--- a/src/man/po/authselect-migration.7.adoc.de.po
++++ b/src/man/po/authselect-migration.7.adoc.de.po
+@@ -193,7 +193,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.es.po b/src/man/po/authselect-migration.7.adoc.es.po
+index 8cb3584..5403cde 100644
+--- a/src/man/po/authselect-migration.7.adoc.es.po
++++ b/src/man/po/authselect-migration.7.adoc.es.po
+@@ -241,7 +241,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.fa.po b/src/man/po/authselect-migration.7.adoc.fa.po
+index b902c0c..db37728 100644
+--- a/src/man/po/authselect-migration.7.adoc.fa.po
++++ b/src/man/po/authselect-migration.7.adoc.fa.po
+@@ -189,7 +189,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.fi.po b/src/man/po/authselect-migration.7.adoc.fi.po
+index 14c6894..79ff561 100644
+--- a/src/man/po/authselect-migration.7.adoc.fi.po
++++ b/src/man/po/authselect-migration.7.adoc.fi.po
+@@ -252,14 +252,14 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "Authconfig-asetuksia `--enableshadow` ja `--passalgo=sha512` käytettiin "
+ "usein varmistamaan, että salasanat on tallennettu hakemistoon `/etc/shadow` "
+ "käyttämällä `sha512`-algoritmia. *Authselect-profiilit käyttävät nyt "
+-"yescrypt-hajautusmenetelmää*, eikä sitä voi muuttaa valinnalla (onnistuu "
++"sha512-hajautusmenetelmää*, eikä sitä voi muuttaa valinnalla (onnistuu "
+ "vain luomalla mukautettu profiili). Voit jättää nämä vaihtoehdot pois."
+ 
+ #. type: Block title
+diff --git a/src/man/po/authselect-migration.7.adoc.fr.po b/src/man/po/authselect-migration.7.adoc.fr.po
+index cf3fcf9..55a7386 100644
+--- a/src/man/po/authselect-migration.7.adoc.fr.po
++++ b/src/man/po/authselect-migration.7.adoc.fr.po
+@@ -259,14 +259,14 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "Les options d’Authconfig '--enableshadow' et '--passalgo=sha512' ont souvent "
+ "été utilisées pour s’assurer que les mots de passe sont stockés dans '/etc/"
+ "shadow' en utilisant l’algorithme 'sha512'. *Les profils authselect "
+-"utilisent maintenant la méthode de hachage yescrypt* et elle ne peut pas "
++"utilisent maintenant la méthode de hachage sha512* et elle ne peut pas "
+ "être modifiée via une option (uniquement en créant un profil personnalisé).  "
+ "Vous pouvez simplement omettre ces options."
+ 
+diff --git a/src/man/po/authselect-migration.7.adoc.hu.po b/src/man/po/authselect-migration.7.adoc.hu.po
+index a058b22..368476a 100644
+--- a/src/man/po/authselect-migration.7.adoc.hu.po
++++ b/src/man/po/authselect-migration.7.adoc.hu.po
+@@ -189,7 +189,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.it.po b/src/man/po/authselect-migration.7.adoc.it.po
+index f28d362..d09af60 100644
+--- a/src/man/po/authselect-migration.7.adoc.it.po
++++ b/src/man/po/authselect-migration.7.adoc.it.po
+@@ -189,7 +189,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.ja.po b/src/man/po/authselect-migration.7.adoc.ja.po
+index 782e094..a8da7e2 100644
+--- a/src/man/po/authselect-migration.7.adoc.ja.po
++++ b/src/man/po/authselect-migration.7.adoc.ja.po
+@@ -246,13 +246,13 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "Authconfig オプション `--enableshadow`と` --passalgo = sha512`は、パスワード"
+ "が `sha512`アルゴリズムを使用して` / etc / shadow`に確実に保存されるようにす"
+-"るためによく使用されていました。 * authselect プロファイルはyescryptハッシュ"
++"るためによく使用されていました。 * authselect プロファイルはsha512ハッシュ"
+ "メソッドを使用するようになりました*。オプションを使用して変更することはできま"
+ "せん(カスタムプロファイルを作成する場合のみ）。 これらのオプションは省略でき"
+ "ます。"
+diff --git a/src/man/po/authselect-migration.7.adoc.ko.po b/src/man/po/authselect-migration.7.adoc.ko.po
+index 9704e0b..338bc33 100644
+--- a/src/man/po/authselect-migration.7.adoc.ko.po
++++ b/src/man/po/authselect-migration.7.adoc.ko.po
+@@ -249,13 +249,13 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "Authconfig 선택 `--enableshadow`와 `--passalgo=sah512`는 비밀번호는 `sha512` "
+ "알고리즘을 사용하여 `/etc/shadow`에서 저장되어지도록 자주 사용되곤 합니다. "
+-"*authselect 프로파일은 이제 yescrypt 해쉬 방법을 사용합니다* 그리고 이는 선택"
++"*authselect 프로파일은 이제 sha512 해쉬 방법을 사용합니다* 그리고 이는 선택"
+ "(사용자 정의 프로파일 생성에서만)을 통해 변경 될 수 없습니다.  당신은 다만 이"
+ "들 옵션을 생략 할 수 있습니다."
+ 
+diff --git a/src/man/po/authselect-migration.7.adoc.nl.po b/src/man/po/authselect-migration.7.adoc.nl.po
+index 15573ef..b587fa4 100644
+--- a/src/man/po/authselect-migration.7.adoc.nl.po
++++ b/src/man/po/authselect-migration.7.adoc.nl.po
+@@ -257,14 +257,14 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "De authconfig-opties '--enableshadow' and '--passalgo=sha512' werden vaak "
+ "gebruikt om te verzekeren dat wachtwoorden worden opgeslagen in /etc/shadow "
+ "met gebruik van het sha512-algoritme. *De authselect-profielen gebruiken "
+-"thans hashing met yescrypt.* Dit kan niet met een optie worden gewijzigd, "
++"thans hashing met sha512.* Dit kan niet met een optie worden gewijzigd, "
+ "maar alleen door een eigen profiel aan te maken. U kunt de voornoemde opties "
+ "gewoon weglaten."
+ 
+diff --git a/src/man/po/authselect-migration.7.adoc.pl.po b/src/man/po/authselect-migration.7.adoc.pl.po
+index e0e629a..d229fb7 100644
+--- a/src/man/po/authselect-migration.7.adoc.pl.po
++++ b/src/man/po/authselect-migration.7.adoc.pl.po
+@@ -191,7 +191,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.pot b/src/man/po/authselect-migration.7.adoc.pot
+index c35b730..bed9498 100644
+--- a/src/man/po/authselect-migration.7.adoc.pot
++++ b/src/man/po/authselect-migration.7.adoc.pot
+@@ -188,7 +188,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.pt.po b/src/man/po/authselect-migration.7.adoc.pt.po
+index 982c629..e67478b 100644
+--- a/src/man/po/authselect-migration.7.adoc.pt.po
++++ b/src/man/po/authselect-migration.7.adoc.pt.po
+@@ -192,7 +192,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.pt_BR.po b/src/man/po/authselect-migration.7.adoc.pt_BR.po
+index 51584e7..a63b8fb 100644
+--- a/src/man/po/authselect-migration.7.adoc.pt_BR.po
++++ b/src/man/po/authselect-migration.7.adoc.pt_BR.po
+@@ -198,7 +198,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.ru.po b/src/man/po/authselect-migration.7.adoc.ru.po
+index 469f463..fd0eb1a 100644
+--- a/src/man/po/authselect-migration.7.adoc.ru.po
++++ b/src/man/po/authselect-migration.7.adoc.ru.po
+@@ -256,14 +256,14 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "Параметры Authconfig `--enableshadow` и`--passalgo=sha512` часто "
+ "использовались, чтобы гарантировать хранение паролей в `/ etc / shadow` с "
+ "использованием алгоритма`sha512`. *Профили authselect теперь используют "
+-"метод хеширования yescrypt*, и его нельзя изменить с помощью параметра "
++"метод хеширования sha512*, и его нельзя изменить с помощью параметра "
+ "(только путем создания пользовательского профиля). Вы можете просто опустить "
+ "эти параметры."
+ 
+diff --git a/src/man/po/authselect-migration.7.adoc.si.po b/src/man/po/authselect-migration.7.adoc.si.po
+index 0dbdb2c..5f88382 100644
+--- a/src/man/po/authselect-migration.7.adoc.si.po
++++ b/src/man/po/authselect-migration.7.adoc.si.po
+@@ -188,7 +188,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.sv.po b/src/man/po/authselect-migration.7.adoc.sv.po
+index b3087ea..397e901 100644
+--- a/src/man/po/authselect-migration.7.adoc.sv.po
++++ b/src/man/po/authselect-migration.7.adoc.sv.po
+@@ -253,13 +253,13 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "Authconfig-flaggorna ”--enableshadow” och ”--passalgo=sha512” användes ofta "
+ "för att säkerställa att lösenord lagras i ”/etc/shadow” med algoritmen "
+-"”sha512”. *Authselect-profilerna använder nu hashningsmetoden yescrypt* och "
++"”sha512”. *Authselect-profilerna använder nu hashningsmetoden sha512* och "
+ "det kan inte ändras genom någon flagga (endast genom att skapa en anpassad "
+ "profil). Du kan helt enkelt utelämna dessa flaggor."
+ 
+diff --git a/src/man/po/authselect-migration.7.adoc.tr.po b/src/man/po/authselect-migration.7.adoc.tr.po
+index 35e5d5c..157f7d2 100644
+--- a/src/man/po/authselect-migration.7.adoc.tr.po
++++ b/src/man/po/authselect-migration.7.adoc.tr.po
+@@ -258,13 +258,13 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "`--enableshadow` ve `--passalgo=sha512` authconfig seçenekleri, parolaların "
+ "`/etc/shadow` dosyasında `sha512` algoritması kullanılarak saklandığından "
+-"emin olmak için sıklıkla kullanılırdı. *Authselect profilleri artık yescrypt "
++"emin olmak için sıklıkla kullanılırdı. *Authselect profilleri artık sha512 "
+ "şifreleme yöntemini kullanıyor* ve bir seçenek aracılığıyla değiştirilemez "
+ "(yalnızca özel bir profil oluşturarak değiştirilebilir).  Bu seçenekleri "
+ "yalnızca atlayabilirsiniz."
+diff --git a/src/man/po/authselect-migration.7.adoc.uk.po b/src/man/po/authselect-migration.7.adoc.uk.po
+index 5a1b8a3..98d9841 100644
+--- a/src/man/po/authselect-migration.7.adoc.uk.po
++++ b/src/man/po/authselect-migration.7.adoc.uk.po
+@@ -257,14 +257,14 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+ "Параметри authconfig `--enableshadow` і `--passalgo=sha512`часто "
+ "використовували для забезпечення зберігання паролів у `/etc/shadow` з "
+ "використанням алгоритму `sha512`. *У поточних версіях профілів authselect "
+-"використано метод хешування yescrypt*, його не можна змінити якимось "
++"використано метод хешування sha512*, його не можна змінити якимось "
+ "параметром (лише за допомогою нетипового профілю). Ви можете просто не "
+ "використовувати ці параметри."
+ 
+diff --git a/src/man/po/authselect-migration.7.adoc.zh_CN.po b/src/man/po/authselect-migration.7.adoc.zh_CN.po
+index 6f5e562..2b95ca4 100644
+--- a/src/man/po/authselect-migration.7.adoc.zh_CN.po
++++ b/src/man/po/authselect-migration.7.adoc.zh_CN.po
+@@ -190,7 +190,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+diff --git a/src/man/po/authselect-migration.7.adoc.zh_TW.po b/src/man/po/authselect-migration.7.adoc.zh_TW.po
+index 43ab062..e7112be 100644
+--- a/src/man/po/authselect-migration.7.adoc.zh_TW.po
++++ b/src/man/po/authselect-migration.7.adoc.zh_TW.po
+@@ -189,7 +189,7 @@ msgstr ""
+ msgid ""
+ "Authconfig options `--enableshadow` and `--passalgo=sha512` were often used "
+ "to make sure that passwords are stored in `/etc/shadow` using `sha512` "
+-"algorithm. *The authselect profiles now use the yescrypt hashing method* and "
++"algorithm. *The authselect profiles now use the sha512 hashing method* and "
+ "it cannot be changed through an option (only by creating a custom profile).  "
+ "You can just omit these options."
+ msgstr ""
+-- 
+2.40.1
+
