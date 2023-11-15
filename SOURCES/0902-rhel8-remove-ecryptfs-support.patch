@@ -1,0 +1,283 @@
+From bfa639947df40c7d601a459af5f0995c89a67200 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
+Date: Mon, 10 Jun 2019 10:53:15 +0200
+Subject: [PATCH 2/3] rhel8: remove ecryptfs support
+
+---
+ profiles/nis/README                 | 3 ---
+ profiles/nis/fingerprint-auth       | 1 -
+ profiles/nis/password-auth          | 1 -
+ profiles/nis/postlogin              | 4 ----
+ profiles/nis/system-auth            | 1 -
+ profiles/sssd/README                | 3 ---
+ profiles/sssd/fingerprint-auth      | 1 -
+ profiles/sssd/password-auth         | 1 -
+ profiles/sssd/postlogin             | 4 ----
+ profiles/sssd/smartcard-auth        | 1 -
+ profiles/sssd/system-auth           | 1 -
+ profiles/winbind/README             | 3 ---
+ profiles/winbind/fingerprint-auth   | 1 -
+ profiles/winbind/password-auth      | 1 -
+ profiles/winbind/postlogin          | 4 ----
+ profiles/winbind/system-auth        | 1 -
+ src/compat/authcompat.py.in.in      | 1 -
+ src/compat/authcompat_Options.py    | 2 +-
+ src/man/authselect-migration.7.adoc | 5 ++---
+ 19 files changed, 3 insertions(+), 36 deletions(-)
+
+diff --git a/profiles/nis/README b/profiles/nis/README
+index 895e8fa8650c04d41bf8bc8d6e3cda18db9bf814..71e23d61a8c1ea773c98524256a5eaad5a75d197 100644
+--- a/profiles/nis/README
++++ b/profiles/nis/README
+@@ -21,9 +21,6 @@ with-mkhomedir::
+     Enable automatic creation of home directories for users on their
+     first login.
+ 
+-with-ecryptfs::
+-    Enable automatic per-user ecryptfs.
+-
+ with-fingerprint::
+     Enable authentication with fingerprint reader through *pam_fprintd*.
+ 
+diff --git a/profiles/nis/fingerprint-auth b/profiles/nis/fingerprint-auth
+index 3a2609df4ca29cdfcbff84b37576bb7b840d72b2..0b2f583a2fcf164647f7de387e9be2982bdf36cb 100644
+--- a/profiles/nis/fingerprint-auth
++++ b/profiles/nis/fingerprint-auth
+@@ -15,7 +15,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                {include if "with-ecryptfs"}
+ -session     optional                                    pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/nis/password-auth b/profiles/nis/password-auth
+index f181a58ab7792c7e1a4234e677cbb7e3d0a6548d..79fb521eb5dff4978203166491b185887d1ec744 100644
+--- a/profiles/nis/password-auth
++++ b/profiles/nis/password-auth
+@@ -18,7 +18,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                  {include if "with-ecryptfs"}
+ -session    optional                                     pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                                 {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/nis/postlogin b/profiles/nis/postlogin
+index 137cd00dc65ee9ea83123f1d3a6f7ba04f0aea04..04a11f049bc1e220c9064fba7b46eb243ddd4996 100644
+--- a/profiles/nis/postlogin
++++ b/profiles/nis/postlogin
+@@ -1,7 +1,3 @@
+-auth        optional                   pam_ecryptfs.so unwrap                                 {include if "with-ecryptfs"}
+-
+-password    optional                   pam_ecryptfs.so unwrap                                 {include if "with-ecryptfs"}
+-
+ session     optional                   pam_umask.so silent
+ session     [success=1 default=ignore] pam_succeed_if.so service !~ gdm* service !~ su* quiet
+ session     [default=1]                pam_lastlog.so nowtmp {if "with-silent-lastlog":silent|showfailed}
+diff --git a/profiles/nis/system-auth b/profiles/nis/system-auth
+index bc3f402435aafb5294dbae94096b184af51cf914..38c10c1afcf936c1d24d8edef941ae849d1186fc 100644
+--- a/profiles/nis/system-auth
++++ b/profiles/nis/system-auth
+@@ -19,7 +19,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                {include if "with-ecryptfs"}
+ -session    optional                                     pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/sssd/README b/profiles/sssd/README
+index 61d5aedf65b2351cf23cea0a6b6b0932e32f0e48..ab9af237442089ded86b63942dd856397108ccf0 100644
+--- a/profiles/sssd/README
++++ b/profiles/sssd/README
+@@ -40,9 +40,6 @@ with-mkhomedir::
+     Enable automatic creation of home directories for users on their
+     first login.
+ 
+-with-ecryptfs::
+-    Enable automatic per-user ecryptfs.
+-
+ with-smartcard::
+     Enable authentication with smartcards through SSSD. Please note that
+     smartcard support must be also explicitly enabled within
+diff --git a/profiles/sssd/fingerprint-auth b/profiles/sssd/fingerprint-auth
+index 20ad3613e66ec85c7d2462d0449854e522383b3a..dc7befe7a4839a1ae5a4d21f4e5232126df55564 100644
+--- a/profiles/sssd/fingerprint-auth
++++ b/profiles/sssd/fingerprint-auth
+@@ -20,7 +20,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                {include if "with-ecryptfs"}
+ -session    optional                                     pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/sssd/password-auth b/profiles/sssd/password-auth
+index 3e33dcc09f68055f2f87709e638005929bd577b3..858c6db357d07dc554806f4807f9b0858a649f44 100644
+--- a/profiles/sssd/password-auth
++++ b/profiles/sssd/password-auth
+@@ -28,7 +28,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                {include if "with-ecryptfs"}
+ -session    optional                                     pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/sssd/postlogin b/profiles/sssd/postlogin
+index 137cd00dc65ee9ea83123f1d3a6f7ba04f0aea04..04a11f049bc1e220c9064fba7b46eb243ddd4996 100644
+--- a/profiles/sssd/postlogin
++++ b/profiles/sssd/postlogin
+@@ -1,7 +1,3 @@
+-auth        optional                   pam_ecryptfs.so unwrap                                 {include if "with-ecryptfs"}
+-
+-password    optional                   pam_ecryptfs.so unwrap                                 {include if "with-ecryptfs"}
+-
+ session     optional                   pam_umask.so silent
+ session     [success=1 default=ignore] pam_succeed_if.so service !~ gdm* service !~ su* quiet
+ session     [default=1]                pam_lastlog.so nowtmp {if "with-silent-lastlog":silent|showfailed}
+diff --git a/profiles/sssd/smartcard-auth b/profiles/sssd/smartcard-auth
+index 0d8bcab250633b09bce0232a5747f3a7e740d5d7..754847f2d8885ff35cbc57ec2364d82b963caa3b 100644
+--- a/profiles/sssd/smartcard-auth
++++ b/profiles/sssd/smartcard-auth
+@@ -18,7 +18,6 @@ account     required                                     pam_permit.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                 {include if "with-ecryptfs"}
+ -session     optional                                    pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                                {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/sssd/system-auth b/profiles/sssd/system-auth
+index a43341120f55bad3fb07dfea1c04453d0a278329..88c49e2dd5b60847d1d19154622a8614a21e5e1f 100644
+--- a/profiles/sssd/system-auth
++++ b/profiles/sssd/system-auth
+@@ -35,7 +35,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                {include if "with-ecryptfs"}
+ -session    optional                                     pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/winbind/README b/profiles/winbind/README
+index 0048c29256f5d4064edfb84a2f4b761fd09e90f6..6f7a7cab1efc768c4c82791d6a8f00def1771d37 100644
+--- a/profiles/winbind/README
++++ b/profiles/winbind/README
+@@ -33,9 +33,6 @@ with-mkhomedir::
+     Enable automatic creation of home directories for users on their
+     first login.
+ 
+-with-ecryptfs::
+-    Enable automatic per-user ecryptfs.
+-
+ with-fingerprint::
+     Enable authentication with fingerprint reader through *pam_fprintd*.
+ 
+diff --git a/profiles/winbind/fingerprint-auth b/profiles/winbind/fingerprint-auth
+index e8997c6c78ce7305fa7068fb169c05c68167880d..c5485ab848989a252e4ff4b1376a41202d21fd67 100644
+--- a/profiles/winbind/fingerprint-auth
++++ b/profiles/winbind/fingerprint-auth
+@@ -19,7 +19,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                {include if "with-ecryptfs"}
+ -session     optional                                    pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/winbind/password-auth b/profiles/winbind/password-auth
+index 58705f3b15165c8d8bd4938889e3fb4d89c1a528..e84e2fcbb2bad9af6156e6e6db23f089f2b5d210 100644
+--- a/profiles/winbind/password-auth
++++ b/profiles/winbind/password-auth
+@@ -25,7 +25,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                  {include if "with-ecryptfs"}
+ -session    optional                                     pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                                 {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/profiles/winbind/postlogin b/profiles/winbind/postlogin
+index 137cd00dc65ee9ea83123f1d3a6f7ba04f0aea04..04a11f049bc1e220c9064fba7b46eb243ddd4996 100644
+--- a/profiles/winbind/postlogin
++++ b/profiles/winbind/postlogin
+@@ -1,7 +1,3 @@
+-auth        optional                   pam_ecryptfs.so unwrap                                 {include if "with-ecryptfs"}
+-
+-password    optional                   pam_ecryptfs.so unwrap                                 {include if "with-ecryptfs"}
+-
+ session     optional                   pam_umask.so silent
+ session     [success=1 default=ignore] pam_succeed_if.so service !~ gdm* service !~ su* quiet
+ session     [default=1]                pam_lastlog.so nowtmp {if "with-silent-lastlog":silent|showfailed}
+diff --git a/profiles/winbind/system-auth b/profiles/winbind/system-auth
+index 994c342441a0ed2738765a9fa7f6cc84f692d1d8..b5c5cfaa964a31b1cd8ac4cb62998c0a0a53a03e 100644
+--- a/profiles/winbind/system-auth
++++ b/profiles/winbind/system-auth
+@@ -26,7 +26,6 @@ password    required                                     pam_deny.so
+ 
+ session     optional                                     pam_keyinit.so revoke
+ session     required                                     pam_limits.so
+-session     optional                                     pam_ecryptfs.so unwrap                                {include if "with-ecryptfs"}
+ -session    optional                                     pam_systemd.so
+ session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
+ session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
+diff --git a/src/compat/authcompat.py.in.in b/src/compat/authcompat.py.in.in
+index 8334293911d1d4c2d98a6d233b91fc348cf06575..55e205bae2c0b1f7892f8b286c288dfeaa26a60d 100755
+--- a/src/compat/authcompat.py.in.in
++++ b/src/compat/authcompat.py.in.in
+@@ -523,7 +523,6 @@ class AuthCompat:
+             'smartcard': 'with-smartcard',
+             'requiresmartcard': 'with-smartcard-required',
+             'fingerprint': 'with-fingerprint',
+-            'ecryptfs': 'with-ecryptfs',
+             'mkhomedir': 'with-mkhomedir',
+             'faillock': 'with-faillock',
+             'pamaccess': 'with-pamaccess',
+diff --git a/src/compat/authcompat_Options.py b/src/compat/authcompat_Options.py
+index d26dedabdfb9519861076b58cddd0dd0eb04b7cb..5c8b21b55014198d6d9dfc98bd807c3c922b06f4 100644
+--- a/src/compat/authcompat_Options.py
++++ b/src/compat/authcompat_Options.py
+@@ -93,7 +93,6 @@ class Options:
+         Option.Valued("smartcardaction", _("<0=Lock|1=Ignore>"), _("action to be taken on smart card removal")),
+         Option.Feature("requiresmartcard", _("require smart card for authentication by default")),
+         Option.Feature("fingerprint", _("authentication with fingerprint readers by default")),
+-        Option.Feature("ecryptfs", _("automatic per-user ecryptfs")),
+         Option.Feature("krb5", _("Kerberos authentication by default")),
+         Option.Valued("krb5kdc", _("<server>"), _("default Kerberos KDC")),
+         Option.Valued("krb5adminserver", _("<server>"), _("default Kerberos admin server")),
+@@ -141,6 +140,7 @@ class Options:
+         # layers and will produce warning when used. They will not affect
+         # the system.
+         Option.UnsupportedFeature("cache"),
++        Option.UnsupportedFeature("ecryptfs"),
+         Option.UnsupportedFeature("shadow"),
+         Option.UnsupportedSwitch("useshadow"),
+         Option.UnsupportedFeature("md5"),
+diff --git a/src/man/authselect-migration.7.adoc b/src/man/authselect-migration.7.adoc
+index 3513a7e7cd3d7cc0045167e8224248c5be90ab2c..888cd4e5a0750d4e1aa5898887f5f7fd42472741 100644
+--- a/src/man/authselect-migration.7.adoc
++++ b/src/man/authselect-migration.7.adoc
+@@ -80,7 +80,6 @@ configuration file for required services.
+ |*Authconfig options* |*Authselect profile feature*
+ |--enablesmartcard    |with-smartcard
+ |--enablefingerprint  |with-fingerprint
+-|--enableecryptfs     |with-ecryptfs
+ |--enablemkhomedir    |with-mkhomedir
+ |--enablefaillock     |with-faillock
+ |--enablepamaccess    |with-pamaccess
+@@ -103,8 +102,8 @@ authselect select sssd with-faillock
+ authconfig --enablesssd --enablesssdauth --enablesmartcard --smartcardmodule=sssd --updateall
+ authselect select sssd with-smartcard
+ 
+-authconfig --enableecryptfs --enablepamaccess --updateall
+-authselect select sssd with-ecryptfs with-pamaccess
++authconfig --enablepamaccess --updateall
++authselect select sssd with-pamaccess
+ 
+ authconfig --enablewinbind --enablewinbindauth --winbindjoin=Administrator --updateall
+ realm join -U Administrator --client-software=winbind WINBINDDOMAIN
+-- 
+2.34.1
+
