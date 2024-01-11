@@ -3,7 +3,7 @@
 
 Name:           authselect
 Version:        1.2.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Configures authentication and identity sources from supported profiles
 URL:            https://github.com/authselect/authselect
 
@@ -11,6 +11,8 @@ License:        GPLv3+
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 Patch0001:  0001-po-update-translations.patch
+Patch0002:  0002-profiles-do-not-try-to-change-password-via-sssd-for-.patch
+Patch0003:  0003-po-update-translations.patch
 
 ### Downstream Patches ###
 Patch0901:  0901-rhel9-remove-mention-of-Fedora-Change-page-in-compat.patch
@@ -93,11 +95,7 @@ you develop a front-end for the authselect library.
 
 
 %prep
-%setup -q
-
-for p in %patches ; do
-    %__patch -p1 -i $p
-done
+%autosetup -p1
 
 %build
 autoreconf -if
@@ -294,6 +292,11 @@ exit 0
 exit 0
 
 %changelog
+* Thu Aug 3 2023 Pavel Březina <pbrezina@redhat.com> - 1.2.6-2
+- Fix Japanese translations (RHBZ #2153364)
+- Update translations (RHBZ #2189498)
+- Do not prompt for password twice when changing password of local user (RHBZ #2228098)
+
 * Thu Dec 1 2022 Pavel Březina <pbrezina@redhat.com> - 1.2.6-1
 - Rebase to 1.2.6 (RHBZ #2142805)
 - update translations (RHBZ #2139642)

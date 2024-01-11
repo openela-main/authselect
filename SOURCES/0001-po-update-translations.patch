@@ -1,7 +1,7 @@
-From 66aecde2f4743c552de0a7ec7cf992d4c1024b4c Mon Sep 17 00:00:00 2001
+From 6f1aca05a24356da6787903e67b15588cf3a9ba8 Mon Sep 17 00:00:00 2001
 From: Weblate <noreply@weblate.org>
 Date: Sat, 3 Dec 2022 11:19:57 +0100
-Subject: [PATCH 1/5] po: update translations
+Subject: [PATCH 1/8] po: update translations
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -46,26 +46,29 @@ Translate-URL: https://translate.fedoraproject.org/projects/authselect/1-2-x-app
 Translate-URL: https://translate.fedoraproject.org/projects/authselect/12x-authselect8adoc/
 Translation: authselect/1.2.x
 Translation: authselect/1.2.x-authselect.8.adoc
+Patch-name: 0001-po-update-translations.patch
+Patch-id: 1
+From-dist-git-commit: 8461b94b1539db7f26c288e0d5d20dd71e6609bf
 ---
- po/ca.po                              | 244 +++++++++---------
+ po/ca.po                              | 228 ++++++++---------
  po/cs.po                              | 228 ++++++++---------
  po/de.po                              | 228 ++++++++---------
  po/es.po                              | 228 ++++++++---------
- po/fa.po                              | 250 +++++++++---------
+ po/fa.po                              | 228 ++++++++---------
  po/fi.po                              | 231 ++++++++---------
  po/fr.po                              | 228 ++++++++---------
  po/hu.po                              | 228 ++++++++---------
- po/id.po                              | 250 +++++++++---------
+ po/id.po                              | 228 ++++++++---------
  po/it.po                              | 228 ++++++++---------
  po/ja.po                              | 291 ++++++++++-----------
  po/ka.po                              | 240 +++++++++---------
  po/ko.po                              | 231 ++++++++---------
  po/nl.po                              | 228 ++++++++---------
  po/pl.po                              | 228 ++++++++---------
- po/pt.po                              | 250 +++++++++---------
+ po/pt.po                              | 228 ++++++++---------
  po/pt_BR.po                           | 228 ++++++++---------
  po/ru.po                              | 228 ++++++++---------
- po/si.po                              | 250 +++++++++---------
+ po/si.po                              | 228 ++++++++---------
  po/sv.po                              | 228 ++++++++---------
  po/tr.po                              | 228 ++++++++---------
  po/uk.po                              | 228 ++++++++---------
@@ -93,10 +96,10 @@ Translation: authselect/1.2.x-authselect.8.adoc
  src/man/po/authselect.8.adoc.uk.po    |  24 +-
  src/man/po/authselect.8.adoc.zh_CN.po |  35 ++-
  src/man/po/authselect.8.adoc.zh_TW.po |  10 +-
- 46 files changed, 3199 insertions(+), 3231 deletions(-)
+ 46 files changed, 3147 insertions(+), 3179 deletions(-)
 
 diff --git a/po/ca.po b/po/ca.po
-index 84786d9a5dbe1995bc53340b3699f07fec096d74..3373e107538325092223d157cda4b1b40f6ab4db 100644
+index 84786d9..3373e10 100644
 --- a/po/ca.po
 +++ b/po/ca.po
 @@ -3,7 +3,7 @@ msgid ""
@@ -267,20 +270,17 @@ index 84786d9a5dbe1995bc53340b3699f07fec096d74..3373e107538325092223d157cda4b1b4
  msgstr "No es pot activar el perfil [%d]: %s\n"
  
 -#: src/cli/main.c:210
--#, c-format
--msgid "Profile \"%s\" was selected.\n"
--msgstr ""
--
- #: src/cli/main.c:213
--msgid "The following nsswitch maps are overwritten by the profile:\n"
-+#, c-format
-+msgid "Profile \"%s\" was selected.\n"
++#: src/cli/main.c:213
+ #, c-format
+ msgid "Profile \"%s\" was selected.\n"
  msgstr ""
  
- #: src/cli/main.c:216
-+msgid "The following nsswitch maps are overwritten by the profile:\n"
-+msgstr ""
-+
+-#: src/cli/main.c:213
++#: src/cli/main.c:216
+ msgid "The following nsswitch maps are overwritten by the profile:\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:216
 +#: src/cli/main.c:219
  #, c-format
  msgid "- %s\n"
@@ -537,15 +537,12 @@ index 84786d9a5dbe1995bc53340b3699f07fec096d74..3373e107538325092223d157cda4b1b4
  msgstr ""
  
 -#: src/cli/main.c:764
--#, c-format
--msgid "New profile was created at %s\n"
--msgstr ""
--
- #: src/cli/main.c:785
-+#, c-format
-+msgid "New profile was created at %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:785
+ #, c-format
+ msgid "New profile was created at %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:785
 +#: src/cli/main.c:808
  msgid "Print backup names without any formatting and additional information"
  msgstr ""
@@ -696,13 +693,11 @@ index 84786d9a5dbe1995bc53340b3699f07fec096d74..3373e107538325092223d157cda4b1b4
  msgstr ""
  
 -#: src/compat/authcompat.py.in.in:468
--msgid "Running authconfig compatibility tool."
--msgstr ""
--
- #: src/compat/authcompat.py.in.in:469
-+msgid "Running authconfig compatibility tool."
-+msgstr ""
-+
++#: src/compat/authcompat.py.in.in:469
+ msgid "Running authconfig compatibility tool."
+ msgstr ""
+ 
+-#: src/compat/authcompat.py.in.in:469
 +#: src/compat/authcompat.py.in.in:470
  msgid ""
  "The purpose of this tool is to enable authentication against chosen services "
@@ -764,7 +759,7 @@ index 84786d9a5dbe1995bc53340b3699f07fec096d74..3373e107538325092223d157cda4b1b4
  msgid "Error: Please, provide --updateall option."
  msgstr "Error: proporcioneu l'opció --updateall."
 diff --git a/po/cs.po b/po/cs.po
-index 66255c9db3c1c1a98869ff88dcf99e7a2f36a163..e95d7973060f69f708475fb44bff058d637ce010 100644
+index 66255c9..e95d797 100644
 --- a/po/cs.po
 +++ b/po/cs.po
 @@ -7,7 +7,7 @@ msgid ""
@@ -1440,7 +1435,7 @@ index 66255c9db3c1c1a98869ff88dcf99e7a2f36a163..e95d7973060f69f708475fb44bff058d
  msgid "Error: Please, provide --updateall option."
  msgstr "Chyba: Zadejte prosím volbu --updateall."
 diff --git a/po/de.po b/po/de.po
-index d15c0fc9b3db503641dcc733f767036c629113d5..d509b09fd15b9e1490e5ca86c6bc421a28819a48 100644
+index d15c0fc..d509b09 100644
 --- a/po/de.po
 +++ b/po/de.po
 @@ -7,7 +7,7 @@ msgid ""
@@ -2117,7 +2112,7 @@ index d15c0fc9b3db503641dcc733f767036c629113d5..d509b09fd15b9e1490e5ca86c6bc421a
  msgid "Error: Please, provide --updateall option."
  msgstr "Fehler: Bitte geben Sie die Option --updateall an."
 diff --git a/po/es.po b/po/es.po
-index a799ea3b03a9f36b8cb15ee2134ba5a243da549e..3868023cdaab1e638f6f555ff7b020175cba1665 100644
+index a799ea3..3868023 100644
 --- a/po/es.po
 +++ b/po/es.po
 @@ -9,7 +9,7 @@ msgid ""
@@ -2793,7 +2788,7 @@ index a799ea3b03a9f36b8cb15ee2134ba5a243da549e..3868023cdaab1e638f6f555ff7b02017
  msgid "Error: Please, provide --updateall option."
  msgstr "Error: Por favor, indique la opción --updateall."
 diff --git a/po/fa.po b/po/fa.po
-index d48012a0f75af480f24b8af481d40633c5ea7e03..2968bc3c3b6ab89f292299e5552b610f0b6805d6 100644
+index d48012a..2968bc3 100644
 --- a/po/fa.po
 +++ b/po/fa.po
 @@ -6,7 +6,7 @@ msgid ""
@@ -2958,20 +2953,17 @@ index d48012a0f75af480f24b8af481d40633c5ea7e03..2968bc3c3b6ab89f292299e5552b610f
  msgstr ""
  
 -#: src/cli/main.c:210
--#, c-format
--msgid "Profile \"%s\" was selected.\n"
--msgstr ""
--
- #: src/cli/main.c:213
--msgid "The following nsswitch maps are overwritten by the profile:\n"
-+#, c-format
-+msgid "Profile \"%s\" was selected.\n"
++#: src/cli/main.c:213
+ #, c-format
+ msgid "Profile \"%s\" was selected.\n"
  msgstr ""
  
- #: src/cli/main.c:216
-+msgid "The following nsswitch maps are overwritten by the profile:\n"
-+msgstr ""
-+
+-#: src/cli/main.c:213
++#: src/cli/main.c:216
+ msgid "The following nsswitch maps are overwritten by the profile:\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:216
 +#: src/cli/main.c:219
  #, c-format
  msgid "- %s\n"
@@ -3166,15 +3158,12 @@ index d48012a0f75af480f24b8af481d40633c5ea7e03..2968bc3c3b6ab89f292299e5552b610f
  msgstr ""
  
 -#: src/cli/main.c:719
--#, c-format
--msgid "Unable to disable feature [%d]: %s\n"
--msgstr ""
--
- #: src/cli/main.c:738
-+#, c-format
-+msgid "Unable to disable feature [%d]: %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:738
+ #, c-format
+ msgid "Unable to disable feature [%d]: %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:738
 +#: src/cli/main.c:759
  msgid "Create new profile as a vendor profile instead of a custom profile"
  msgstr ""
@@ -3228,15 +3217,12 @@ index d48012a0f75af480f24b8af481d40633c5ea7e03..2968bc3c3b6ab89f292299e5552b610f
  msgstr ""
  
 -#: src/cli/main.c:764
--#, c-format
--msgid "New profile was created at %s\n"
--msgstr ""
--
- #: src/cli/main.c:785
-+#, c-format
-+msgid "New profile was created at %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:785
+ #, c-format
+ msgid "New profile was created at %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:785
 +#: src/cli/main.c:808
  msgid "Print backup names without any formatting and additional information"
  msgstr ""
@@ -3387,13 +3373,11 @@ index d48012a0f75af480f24b8af481d40633c5ea7e03..2968bc3c3b6ab89f292299e5552b610f
  msgstr ""
  
 -#: src/compat/authcompat.py.in.in:468
--msgid "Running authconfig compatibility tool."
--msgstr ""
--
- #: src/compat/authcompat.py.in.in:469
-+msgid "Running authconfig compatibility tool."
-+msgstr ""
-+
++#: src/compat/authcompat.py.in.in:469
+ msgid "Running authconfig compatibility tool."
+ msgstr ""
+ 
+-#: src/compat/authcompat.py.in.in:469
 +#: src/compat/authcompat.py.in.in:470
  msgid ""
  "The purpose of this tool is to enable authentication against chosen services "
@@ -3448,7 +3432,7 @@ index d48012a0f75af480f24b8af481d40633c5ea7e03..2968bc3c3b6ab89f292299e5552b610f
  msgid "Error: Please, provide --updateall option."
  msgstr ""
 diff --git a/po/fi.po b/po/fi.po
-index 9d2e99b24f3353fe6c5ac64a838fe2bcd5268fe4..2ae32ff908cee4decf5bc2b800fc588796faaf58 100644
+index 9d2e99b..2ae32ff 100644
 --- a/po/fi.po
 +++ b/po/fi.po
 @@ -6,7 +6,7 @@ msgid ""
@@ -4120,7 +4104,7 @@ index 9d2e99b24f3353fe6c5ac64a838fe2bcd5268fe4..2ae32ff908cee4decf5bc2b800fc5887
  msgid "Error: Please, provide --updateall option."
  msgstr "Virhe: Ole hyvä ja anna '--updateall'."
 diff --git a/po/fr.po b/po/fr.po
-index 91adf6c4bb3df1897e53323da382194aebeaf70b..e686cb374d711575590e5b29c97dfb641c24d894 100644
+index 91adf6c..e686cb3 100644
 --- a/po/fr.po
 +++ b/po/fr.po
 @@ -10,7 +10,7 @@ msgid ""
@@ -4798,7 +4782,7 @@ index 91adf6c4bb3df1897e53323da382194aebeaf70b..e686cb374d711575590e5b29c97dfb64
  msgid "Error: Please, provide --updateall option."
  msgstr "Erreur : veuillez activer l’option --updateall."
 diff --git a/po/hu.po b/po/hu.po
-index 42c84addce849b483bdbf053f71bc685b8ec2a49..87f9c508512b4ee9fdd2e57970fb1a34018e32be 100644
+index 42c84ad..87f9c50 100644
 --- a/po/hu.po
 +++ b/po/hu.po
 @@ -7,7 +7,7 @@ msgid ""
@@ -5473,7 +5457,7 @@ index 42c84addce849b483bdbf053f71bc685b8ec2a49..87f9c508512b4ee9fdd2e57970fb1a34
  msgid "Error: Please, provide --updateall option."
  msgstr "Hiba: adja meg az --updateall kapcsolót."
 diff --git a/po/id.po b/po/id.po
-index 5bc5ba68dcd795b822610d1f7e2191a6e08e36ad..a83e1e207f0ff16c556dc92aaf8078a4ad1f45ba 100644
+index 5bc5ba6..a83e1e2 100644
 --- a/po/id.po
 +++ b/po/id.po
 @@ -8,7 +8,7 @@ msgid ""
@@ -5638,20 +5622,17 @@ index 5bc5ba68dcd795b822610d1f7e2191a6e08e36ad..a83e1e207f0ff16c556dc92aaf8078a4
  msgstr ""
  
 -#: src/cli/main.c:210
--#, c-format
--msgid "Profile \"%s\" was selected.\n"
--msgstr ""
--
- #: src/cli/main.c:213
--msgid "The following nsswitch maps are overwritten by the profile:\n"
-+#, c-format
-+msgid "Profile \"%s\" was selected.\n"
++#: src/cli/main.c:213
+ #, c-format
+ msgid "Profile \"%s\" was selected.\n"
  msgstr ""
  
- #: src/cli/main.c:216
-+msgid "The following nsswitch maps are overwritten by the profile:\n"
-+msgstr ""
-+
+-#: src/cli/main.c:213
++#: src/cli/main.c:216
+ msgid "The following nsswitch maps are overwritten by the profile:\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:216
 +#: src/cli/main.c:219
  #, c-format
  msgid "- %s\n"
@@ -5846,15 +5827,12 @@ index 5bc5ba68dcd795b822610d1f7e2191a6e08e36ad..a83e1e207f0ff16c556dc92aaf8078a4
  msgstr ""
  
 -#: src/cli/main.c:719
--#, c-format
--msgid "Unable to disable feature [%d]: %s\n"
--msgstr ""
--
- #: src/cli/main.c:738
-+#, c-format
-+msgid "Unable to disable feature [%d]: %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:738
+ #, c-format
+ msgid "Unable to disable feature [%d]: %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:738
 +#: src/cli/main.c:759
  msgid "Create new profile as a vendor profile instead of a custom profile"
  msgstr ""
@@ -5908,15 +5886,12 @@ index 5bc5ba68dcd795b822610d1f7e2191a6e08e36ad..a83e1e207f0ff16c556dc92aaf8078a4
  msgstr ""
  
 -#: src/cli/main.c:764
--#, c-format
--msgid "New profile was created at %s\n"
--msgstr ""
--
- #: src/cli/main.c:785
-+#, c-format
-+msgid "New profile was created at %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:785
+ #, c-format
+ msgid "New profile was created at %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:785
 +#: src/cli/main.c:808
  msgid "Print backup names without any formatting and additional information"
  msgstr ""
@@ -6067,13 +6042,11 @@ index 5bc5ba68dcd795b822610d1f7e2191a6e08e36ad..a83e1e207f0ff16c556dc92aaf8078a4
  msgstr ""
  
 -#: src/compat/authcompat.py.in.in:468
--msgid "Running authconfig compatibility tool."
--msgstr ""
--
- #: src/compat/authcompat.py.in.in:469
-+msgid "Running authconfig compatibility tool."
-+msgstr ""
-+
++#: src/compat/authcompat.py.in.in:469
+ msgid "Running authconfig compatibility tool."
+ msgstr ""
+ 
+-#: src/compat/authcompat.py.in.in:469
 +#: src/compat/authcompat.py.in.in:470
  msgid ""
  "The purpose of this tool is to enable authentication against chosen services "
@@ -6128,7 +6101,7 @@ index 5bc5ba68dcd795b822610d1f7e2191a6e08e36ad..a83e1e207f0ff16c556dc92aaf8078a4
  msgid "Error: Please, provide --updateall option."
  msgstr ""
 diff --git a/po/it.po b/po/it.po
-index f0e990cb496dd6ec5bd849e86621c839e2d455b5..285726001b5522232143657305b0e9973f1fbfa4 100644
+index f0e990c..2857260 100644
 --- a/po/it.po
 +++ b/po/it.po
 @@ -5,7 +5,7 @@ msgid ""
@@ -6798,7 +6771,7 @@ index f0e990cb496dd6ec5bd849e86621c839e2d455b5..285726001b5522232143657305b0e997
  msgid "Error: Please, provide --updateall option."
  msgstr "Errore: fornire l'opzione --updateall."
 diff --git a/po/ja.po b/po/ja.po
-index 1e822c3a1d80e684abe085ea31cfe86fd4d5b677..5adcfbd662be9c43fe0616f789bb8302d0d2daba 100644
+index 1e822c3..5adcfbd 100644
 --- a/po/ja.po
 +++ b/po/ja.po
 @@ -1,14 +1,15 @@
@@ -7670,7 +7643,7 @@ index 1e822c3a1d80e684abe085ea31cfe86fd4d5b677..5adcfbd662be9c43fe0616f789bb8302
  msgid "Error: Please, provide --updateall option."
  msgstr "エラー: --updateall オプションを提供してください。"
 diff --git a/po/ka.po b/po/ka.po
-index 2df9b75cc99bdae3a6260ebaa6547085a54ae1c0..905b582f4c11073786b21ebe945aa3cf1bc29643 100644
+index 2df9b75..905b582 100644
 --- a/po/ka.po
 +++ b/po/ka.po
 @@ -6,7 +6,7 @@ msgid ""
@@ -8375,7 +8348,7 @@ index 2df9b75cc99bdae3a6260ebaa6547085a54ae1c0..905b582f4c11073786b21ebe945aa3cf
  msgid "Error: Please, provide --updateall option."
  msgstr "შეცდომა: გთხოვთ გაუსვათ --updateall პარამეტრით."
 diff --git a/po/ko.po b/po/ko.po
-index 5d6c740ec406fe7435f72b8a39a4a9f97fcd873d..3942b7023a2f88ce285000a1872d633390ef61d1 100644
+index 5d6c740..3942b70 100644
 --- a/po/ko.po
 +++ b/po/ko.po
 @@ -9,7 +9,7 @@ msgid ""
@@ -9037,7 +9010,7 @@ index 5d6c740ec406fe7435f72b8a39a4a9f97fcd873d..3942b7023a2f88ce285000a1872d6333
  msgid "Error: Please, provide --updateall option."
  msgstr "오류: --updateall 옵션을 지정하십시오."
 diff --git a/po/nl.po b/po/nl.po
-index 5bb5a5ed60cc3003b915a1351d7fb3e1382d982a..380270a84415b7de1bb9a58e08da8310df02eef1 100644
+index 5bb5a5e..380270a 100644
 --- a/po/nl.po
 +++ b/po/nl.po
 @@ -4,7 +4,7 @@ msgid ""
@@ -9719,7 +9692,7 @@ index 5bb5a5ed60cc3003b915a1351d7fb3e1382d982a..380270a84415b7de1bb9a58e08da8310
  msgid "Error: Please, provide --updateall option."
  msgstr "Fout: Bied de --updateall optie aan."
 diff --git a/po/pl.po b/po/pl.po
-index 81616c6e966f358d73acb82698484c71d923dab7..9b6627cc766c1e0a0db70187e13a57760dbb30c9 100644
+index 81616c6..9b6627c 100644
 --- a/po/pl.po
 +++ b/po/pl.po
 @@ -16,7 +16,7 @@ msgid ""
@@ -10402,7 +10375,7 @@ index 81616c6e966f358d73acb82698484c71d923dab7..9b6627cc766c1e0a0db70187e13a5776
  msgid "Error: Please, provide --updateall option."
  msgstr "Błąd: proszę podać opcję --updateall."
 diff --git a/po/pt.po b/po/pt.po
-index 6b1d1ab3902f7669bcfa020867bf5cc22fe6975d..ad02a0b94911380ec4824446a5c7abfe4cd1fa6e 100644
+index 6b1d1ab..ad02a0b 100644
 --- a/po/pt.po
 +++ b/po/pt.po
 @@ -4,7 +4,7 @@ msgid ""
@@ -10567,20 +10540,17 @@ index 6b1d1ab3902f7669bcfa020867bf5cc22fe6975d..ad02a0b94911380ec4824446a5c7abfe
  msgstr "Não é possível ativar o perfil [%d]: %s\n"
  
 -#: src/cli/main.c:210
--#, c-format
--msgid "Profile \"%s\" was selected.\n"
--msgstr ""
--
- #: src/cli/main.c:213
--msgid "The following nsswitch maps are overwritten by the profile:\n"
-+#, c-format
-+msgid "Profile \"%s\" was selected.\n"
++#: src/cli/main.c:213
+ #, c-format
+ msgid "Profile \"%s\" was selected.\n"
  msgstr ""
  
- #: src/cli/main.c:216
-+msgid "The following nsswitch maps are overwritten by the profile:\n"
-+msgstr ""
-+
+-#: src/cli/main.c:213
++#: src/cli/main.c:216
+ msgid "The following nsswitch maps are overwritten by the profile:\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:216
 +#: src/cli/main.c:219
  #, c-format
  msgid "- %s\n"
@@ -10775,15 +10745,12 @@ index 6b1d1ab3902f7669bcfa020867bf5cc22fe6975d..ad02a0b94911380ec4824446a5c7abfe
  msgstr ""
  
 -#: src/cli/main.c:719
--#, c-format
--msgid "Unable to disable feature [%d]: %s\n"
--msgstr ""
--
- #: src/cli/main.c:738
-+#, c-format
-+msgid "Unable to disable feature [%d]: %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:738
+ #, c-format
+ msgid "Unable to disable feature [%d]: %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:738
 +#: src/cli/main.c:759
  msgid "Create new profile as a vendor profile instead of a custom profile"
  msgstr ""
@@ -10837,15 +10804,12 @@ index 6b1d1ab3902f7669bcfa020867bf5cc22fe6975d..ad02a0b94911380ec4824446a5c7abfe
  msgstr ""
  
 -#: src/cli/main.c:764
--#, c-format
--msgid "New profile was created at %s\n"
--msgstr ""
--
- #: src/cli/main.c:785
-+#, c-format
-+msgid "New profile was created at %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:785
+ #, c-format
+ msgid "New profile was created at %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:785
 +#: src/cli/main.c:808
  msgid "Print backup names without any formatting and additional information"
  msgstr ""
@@ -10996,13 +10960,11 @@ index 6b1d1ab3902f7669bcfa020867bf5cc22fe6975d..ad02a0b94911380ec4824446a5c7abfe
  msgstr ""
  
 -#: src/compat/authcompat.py.in.in:468
--msgid "Running authconfig compatibility tool."
--msgstr ""
--
- #: src/compat/authcompat.py.in.in:469
-+msgid "Running authconfig compatibility tool."
-+msgstr ""
-+
++#: src/compat/authcompat.py.in.in:469
+ msgid "Running authconfig compatibility tool."
+ msgstr ""
+ 
+-#: src/compat/authcompat.py.in.in:469
 +#: src/compat/authcompat.py.in.in:470
  msgid ""
  "The purpose of this tool is to enable authentication against chosen services "
@@ -11057,7 +11019,7 @@ index 6b1d1ab3902f7669bcfa020867bf5cc22fe6975d..ad02a0b94911380ec4824446a5c7abfe
  msgid "Error: Please, provide --updateall option."
  msgstr ""
 diff --git a/po/pt_BR.po b/po/pt_BR.po
-index ef4af00a59773fd821cc3ae48e212084a90db5b6..3ccd6679eaa68bc94ae8ac80cec4b81dd099a22c 100644
+index ef4af00..3ccd667 100644
 --- a/po/pt_BR.po
 +++ b/po/pt_BR.po
 @@ -8,7 +8,7 @@ msgid ""
@@ -11731,7 +11693,7 @@ index ef4af00a59773fd821cc3ae48e212084a90db5b6..3ccd6679eaa68bc94ae8ac80cec4b81d
  msgid "Error: Please, provide --updateall option."
  msgstr "Erro: Por favor, forneça a opção --updateall."
 diff --git a/po/ru.po b/po/ru.po
-index 44187fc8c057fc252158e325ce6bfd68641a39da..49190028c7ce89e2a33b0d72f0ae4f185f251ffc 100644
+index 44187fc..4919002 100644
 --- a/po/ru.po
 +++ b/po/ru.po
 @@ -5,7 +5,7 @@ msgid ""
@@ -12405,7 +12367,7 @@ index 44187fc8c057fc252158e325ce6bfd68641a39da..49190028c7ce89e2a33b0d72f0ae4f18
  msgid "Error: Please, provide --updateall option."
  msgstr "Ошибка: укажите параметр --updateall."
 diff --git a/po/si.po b/po/si.po
-index ba802552d4a85ddbf0379f3332905012a5698b71..39f5a79298a22cc38cbba427d976a64347d6b51d 100644
+index ba80255..39f5a79 100644
 --- a/po/si.po
 +++ b/po/si.po
 @@ -6,7 +6,7 @@ msgid ""
@@ -12570,20 +12532,17 @@ index ba802552d4a85ddbf0379f3332905012a5698b71..39f5a79298a22cc38cbba427d976a643
  msgstr ""
  
 -#: src/cli/main.c:210
--#, c-format
--msgid "Profile \"%s\" was selected.\n"
--msgstr ""
--
- #: src/cli/main.c:213
--msgid "The following nsswitch maps are overwritten by the profile:\n"
-+#, c-format
-+msgid "Profile \"%s\" was selected.\n"
++#: src/cli/main.c:213
+ #, c-format
+ msgid "Profile \"%s\" was selected.\n"
  msgstr ""
  
- #: src/cli/main.c:216
-+msgid "The following nsswitch maps are overwritten by the profile:\n"
-+msgstr ""
-+
+-#: src/cli/main.c:213
++#: src/cli/main.c:216
+ msgid "The following nsswitch maps are overwritten by the profile:\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:216
 +#: src/cli/main.c:219
  #, c-format
  msgid "- %s\n"
@@ -12778,15 +12737,12 @@ index ba802552d4a85ddbf0379f3332905012a5698b71..39f5a79298a22cc38cbba427d976a643
  msgstr ""
  
 -#: src/cli/main.c:719
--#, c-format
--msgid "Unable to disable feature [%d]: %s\n"
--msgstr ""
--
- #: src/cli/main.c:738
-+#, c-format
-+msgid "Unable to disable feature [%d]: %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:738
+ #, c-format
+ msgid "Unable to disable feature [%d]: %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:738
 +#: src/cli/main.c:759
  msgid "Create new profile as a vendor profile instead of a custom profile"
  msgstr ""
@@ -12840,15 +12796,12 @@ index ba802552d4a85ddbf0379f3332905012a5698b71..39f5a79298a22cc38cbba427d976a643
  msgstr ""
  
 -#: src/cli/main.c:764
--#, c-format
--msgid "New profile was created at %s\n"
--msgstr ""
--
- #: src/cli/main.c:785
-+#, c-format
-+msgid "New profile was created at %s\n"
-+msgstr ""
-+
++#: src/cli/main.c:785
+ #, c-format
+ msgid "New profile was created at %s\n"
+ msgstr ""
+ 
+-#: src/cli/main.c:785
 +#: src/cli/main.c:808
  msgid "Print backup names without any formatting and additional information"
  msgstr ""
@@ -12999,13 +12952,11 @@ index ba802552d4a85ddbf0379f3332905012a5698b71..39f5a79298a22cc38cbba427d976a643
  msgstr ""
  
 -#: src/compat/authcompat.py.in.in:468
--msgid "Running authconfig compatibility tool."
--msgstr ""
--
- #: src/compat/authcompat.py.in.in:469
-+msgid "Running authconfig compatibility tool."
-+msgstr ""
-+
++#: src/compat/authcompat.py.in.in:469
+ msgid "Running authconfig compatibility tool."
+ msgstr ""
+ 
+-#: src/compat/authcompat.py.in.in:469
 +#: src/compat/authcompat.py.in.in:470
  msgid ""
  "The purpose of this tool is to enable authentication against chosen services "
@@ -13060,7 +13011,7 @@ index ba802552d4a85ddbf0379f3332905012a5698b71..39f5a79298a22cc38cbba427d976a643
  msgid "Error: Please, provide --updateall option."
  msgstr ""
 diff --git a/po/sv.po b/po/sv.po
-index fb1ef0ce4fcff97605c8d1c4d024e5b5ab9020c0..3a2c2479aebc170906f52769b8403b3a8fd29f58 100644
+index fb1ef0c..3a2c247 100644
 --- a/po/sv.po
 +++ b/po/sv.po
 @@ -5,7 +5,7 @@ msgid ""
@@ -13727,7 +13678,7 @@ index fb1ef0ce4fcff97605c8d1c4d024e5b5ab9020c0..3a2c2479aebc170906f52769b8403b3a
  msgid "Error: Please, provide --updateall option."
  msgstr "Fel: var god ange flaggan --updateall."
 diff --git a/po/tr.po b/po/tr.po
-index def0931d8a537dbd3b95efc75e1a2f711148b81a..9be388fbbde21396666502662b964bc475098980 100644
+index def0931..9be388f 100644
 --- a/po/tr.po
 +++ b/po/tr.po
 @@ -8,7 +8,7 @@ msgid ""
@@ -14405,7 +14356,7 @@ index def0931d8a537dbd3b95efc75e1a2f711148b81a..9be388fbbde21396666502662b964bc4
  msgid "Error: Please, provide --updateall option."
  msgstr "Hata: Lütfen --updateall seçeneğini belirtin."
 diff --git a/po/uk.po b/po/uk.po
-index 1371122dcea19b739df2dc2b28c718865ae19cc0..c66594f1bff7c0c0c1dd8aec8d8131f88ad23d06 100644
+index 1371122..c66594f 100644
 --- a/po/uk.po
 +++ b/po/uk.po
 @@ -5,7 +5,7 @@ msgid ""
@@ -15086,7 +15037,7 @@ index 1371122dcea19b739df2dc2b28c718865ae19cc0..c66594f1bff7c0c0c1dd8aec8d8131f8
  msgid "Error: Please, provide --updateall option."
  msgstr "Помилка: будь ласка, вкажіть параметр --updateall."
 diff --git a/po/zh_CN.po b/po/zh_CN.po
-index 3adf18b416c1bf62a14eff55ae5a64cabd524e44..75ec7d808811187b7722121966aaa55236dbc7d4 100644
+index 3adf18b..75ec7d8 100644
 --- a/po/zh_CN.po
 +++ b/po/zh_CN.po
 @@ -6,7 +6,7 @@ msgid ""
@@ -15741,7 +15692,7 @@ index 3adf18b416c1bf62a14eff55ae5a64cabd524e44..75ec7d808811187b7722121966aaa552
  msgid "Error: Please, provide --updateall option."
  msgstr "错误：请提供--updateall选项。"
 diff --git a/po/zh_TW.po b/po/zh_TW.po
-index 808a7d442a105c19ca58c2cbba325ccb2b16841c..89fefedabe611f789fb65aaef0a8b1421fca41ef 100644
+index 808a7d4..89fefed 100644
 --- a/po/zh_TW.po
 +++ b/po/zh_TW.po
 @@ -6,7 +6,7 @@ msgid ""
@@ -16396,7 +16347,7 @@ index 808a7d442a105c19ca58c2cbba325ccb2b16841c..89fefedabe611f789fb65aaef0a8b142
  msgid "Error: Please, provide --updateall option."
  msgstr "錯誤：請提供 --updateall 選項。"
 diff --git a/src/man/po/authselect.8.adoc.ca.po b/src/man/po/authselect.8.adoc.ca.po
-index 367d82a6742f874d304be03bc5d5d49848eed9c1..090496eb6e371ec515578d8746fcf2f2cdad37b8 100644
+index 367d82a..090496e 100644
 --- a/src/man/po/authselect.8.adoc.ca.po
 +++ b/src/man/po/authselect.8.adoc.ca.po
 @@ -5,7 +5,7 @@
@@ -16432,7 +16383,7 @@ index 367d82a6742f874d304be03bc5d5d49848eed9c1..090496eb6e371ec515578d8746fcf2f2
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.cs.po b/src/man/po/authselect.8.adoc.cs.po
-index ba7543fc13a38afef2711fb85c1c980a1c2daa48..98e2ade47b1e5a03c01ef7e7151e7016cd2b09da 100644
+index ba7543f..98e2ade 100644
 --- a/src/man/po/authselect.8.adoc.cs.po
 +++ b/src/man/po/authselect.8.adoc.cs.po
 @@ -2,7 +2,7 @@
@@ -16477,7 +16428,7 @@ index ba7543fc13a38afef2711fb85c1c980a1c2daa48..98e2ade47b1e5a03c01ef7e7151e7016
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.de.po b/src/man/po/authselect.8.adoc.de.po
-index 73f39a1aa713550042664a7091e9b646c2e8cf29..5eb223a0b9d32cfbfcd7f3a6f6c7380d256e5130 100644
+index 73f39a1..5eb223a 100644
 --- a/src/man/po/authselect.8.adoc.de.po
 +++ b/src/man/po/authselect.8.adoc.de.po
 @@ -6,7 +6,7 @@
@@ -16523,7 +16474,7 @@ index 73f39a1aa713550042664a7091e9b646c2e8cf29..5eb223a0b9d32cfbfcd7f3a6f6c7380d
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.es.po b/src/man/po/authselect.8.adoc.es.po
-index bf4c80cc8ef29c18f58043e66c0484ad01aa9342..e71cc89d503b0413eb650db82e40f8f5f9c5c541 100644
+index bf4c80c..e71cc89 100644
 --- a/src/man/po/authselect.8.adoc.es.po
 +++ b/src/man/po/authselect.8.adoc.es.po
 @@ -3,7 +3,7 @@
@@ -16583,7 +16534,7 @@ index bf4c80cc8ef29c18f58043e66c0484ad01aa9342..e71cc89d503b0413eb650db82e40f8f5
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.fa.po b/src/man/po/authselect.8.adoc.fa.po
-index f805af2a6835682fc8335194f562bd779d7a92da..3aa2b3bf8e25d906bf6f48509df5df2f84a515db 100644
+index f805af2..3aa2b3b 100644
 --- a/src/man/po/authselect.8.adoc.fa.po
 +++ b/src/man/po/authselect.8.adoc.fa.po
 @@ -5,7 +5,7 @@
@@ -16619,7 +16570,7 @@ index f805af2a6835682fc8335194f562bd779d7a92da..3aa2b3bf8e25d906bf6f48509df5df2f
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.fi.po b/src/man/po/authselect.8.adoc.fi.po
-index edbdf89b38e3d3de85b73fdf2c61522676c37cfd..a06c0f1fd975fad1a106481596e0f9f46c703fa6 100644
+index edbdf89..a06c0f1 100644
 --- a/src/man/po/authselect.8.adoc.fi.po
 +++ b/src/man/po/authselect.8.adoc.fi.po
 @@ -5,7 +5,7 @@
@@ -17789,7 +17740,7 @@ index edbdf89b38e3d3de85b73fdf2c61522676c37cfd..a06c0f1fd975fad1a106481596e0f9f4
 +"authselect-profiles(5), authselect-migration(7), nsswitch.conf(5), PAM(8)"
  msgstr ""
 diff --git a/src/man/po/authselect.8.adoc.fr.po b/src/man/po/authselect.8.adoc.fr.po
-index eac5ebab4b6f254386313decb122d05c333d5a5d..4a9e835a6eeeefb3a8ea380d07d5d38eda15a147 100644
+index eac5eba..4a9e835 100644
 --- a/src/man/po/authselect.8.adoc.fr.po
 +++ b/src/man/po/authselect.8.adoc.fr.po
 @@ -4,7 +4,7 @@
@@ -17834,7 +17785,7 @@ index eac5ebab4b6f254386313decb122d05c333d5a5d..4a9e835a6eeeefb3a8ea380d07d5d38e
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.hu.po b/src/man/po/authselect.8.adoc.hu.po
-index c34ae9062ec25b96a9cf3cbf3c39c3e7149c0835..6c6484bbe6eae530e12e8e401c2afa7429d33969 100644
+index c34ae90..6c6484b 100644
 --- a/src/man/po/authselect.8.adoc.hu.po
 +++ b/src/man/po/authselect.8.adoc.hu.po
 @@ -3,7 +3,7 @@
@@ -17879,7 +17830,7 @@ index c34ae9062ec25b96a9cf3cbf3c39c3e7149c0835..6c6484bbe6eae530e12e8e401c2afa74
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.it.po b/src/man/po/authselect.8.adoc.it.po
-index e68f27ea7ffaa349b2a10379ddbf9589ec232d8c..386ab4a734c54fb5e64c2d1e169371c04e1af6bc 100644
+index e68f27e..386ab4a 100644
 --- a/src/man/po/authselect.8.adoc.it.po
 +++ b/src/man/po/authselect.8.adoc.it.po
 @@ -6,7 +6,7 @@
@@ -17915,7 +17866,7 @@ index e68f27ea7ffaa349b2a10379ddbf9589ec232d8c..386ab4a734c54fb5e64c2d1e169371c0
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.ja.po b/src/man/po/authselect.8.adoc.ja.po
-index 4d385f1cc88aa29acbc6d4ab7a30c2c7edd32b43..6d7e2ea25c61ec0982428130bf39cb825e2df6ff 100644
+index 4d385f1..6d7e2ea 100644
 --- a/src/man/po/authselect.8.adoc.ja.po
 +++ b/src/man/po/authselect.8.adoc.ja.po
 @@ -6,7 +6,7 @@
@@ -17960,7 +17911,7 @@ index 4d385f1cc88aa29acbc6d4ab7a30c2c7edd32b43..6d7e2ea25c61ec0982428130bf39cb82
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.ko.po b/src/man/po/authselect.8.adoc.ko.po
-index 5b790def173a3cf1be5a946e6e425f04a1bb679f..103be41656d6ec61fcc90b433c9b8a3149d8bde2 100644
+index 5b790de..103be41 100644
 --- a/src/man/po/authselect.8.adoc.ko.po
 +++ b/src/man/po/authselect.8.adoc.ko.po
 @@ -9,8 +9,8 @@
@@ -18026,7 +17977,7 @@ index 5b790def173a3cf1be5a946e6e425f04a1bb679f..103be41656d6ec61fcc90b433c9b8a31
  #. type: Plain text
  #: src/man/authselect.8.adoc:183
 diff --git a/src/man/po/authselect.8.adoc.nl.po b/src/man/po/authselect.8.adoc.nl.po
-index 538ef3ffc8e7dd38dddbf2ecf227a66f884d47d2..0cc7b783ba034f3b443539b01ae032ee099f6f87 100644
+index 538ef3f..0cc7b78 100644
 --- a/src/man/po/authselect.8.adoc.nl.po
 +++ b/src/man/po/authselect.8.adoc.nl.po
 @@ -3,7 +3,7 @@
@@ -18071,7 +18022,7 @@ index 538ef3ffc8e7dd38dddbf2ecf227a66f884d47d2..0cc7b783ba034f3b443539b01ae032ee
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.pl.po b/src/man/po/authselect.8.adoc.pl.po
-index cd9ed86d8f471c30f2611ab0adb987acc6feb67d..2d7c5f3ef416153b547987c304346d84b8bdff78 100644
+index cd9ed86..2d7c5f3 100644
 --- a/src/man/po/authselect.8.adoc.pl.po
 +++ b/src/man/po/authselect.8.adoc.pl.po
 @@ -9,7 +9,7 @@
@@ -18107,7 +18058,7 @@ index cd9ed86d8f471c30f2611ab0adb987acc6feb67d..2d7c5f3ef416153b547987c304346d84
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.pt.po b/src/man/po/authselect.8.adoc.pt.po
-index 771a14b0412782e907a67bc62443bbffd8425097..cab8eae5a4341f7e124f8b80b81981dc0b9206ab 100644
+index 771a14b..cab8eae 100644
 --- a/src/man/po/authselect.8.adoc.pt.po
 +++ b/src/man/po/authselect.8.adoc.pt.po
 @@ -7,7 +7,7 @@
@@ -18143,7 +18094,7 @@ index 771a14b0412782e907a67bc62443bbffd8425097..cab8eae5a4341f7e124f8b80b81981dc
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.pt_BR.po b/src/man/po/authselect.8.adoc.pt_BR.po
-index 80e980d11134a8ca01c528534912b772f7691ce0..58d9bfbc65f7d56b170625637f241719ec628a65 100644
+index 80e980d..58d9bfb 100644
 --- a/src/man/po/authselect.8.adoc.pt_BR.po
 +++ b/src/man/po/authselect.8.adoc.pt_BR.po
 @@ -7,7 +7,7 @@
@@ -18179,7 +18130,7 @@ index 80e980d11134a8ca01c528534912b772f7691ce0..58d9bfbc65f7d56b170625637f241719
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.ru.po b/src/man/po/authselect.8.adoc.ru.po
-index fd9d4bed7812e882fc1ce859dfad2dd879fd7446..65aafb2c310dcdc5292a616a337ad2d5b274fcfa 100644
+index fd9d4be..65aafb2 100644
 --- a/src/man/po/authselect.8.adoc.ru.po
 +++ b/src/man/po/authselect.8.adoc.ru.po
 @@ -7,7 +7,7 @@
@@ -18224,7 +18175,7 @@ index fd9d4bed7812e882fc1ce859dfad2dd879fd7446..65aafb2c310dcdc5292a616a337ad2d5
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.si.po b/src/man/po/authselect.8.adoc.si.po
-index 4e981853367dde6ea07879e636a964b3c8d155d6..2b79b83262f3cf53f93fa05ab73e74a7cffbece7 100644
+index 4e98185..2b79b83 100644
 --- a/src/man/po/authselect.8.adoc.si.po
 +++ b/src/man/po/authselect.8.adoc.si.po
 @@ -5,7 +5,7 @@
@@ -18260,7 +18211,7 @@ index 4e981853367dde6ea07879e636a964b3c8d155d6..2b79b83262f3cf53f93fa05ab73e74a7
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.sv.po b/src/man/po/authselect.8.adoc.sv.po
-index 45b353dfdc369220f8d3adccbc65e8a50f8bee67..104a90ca54e3ccb300bba7bd31c42c5bdd6215b4 100644
+index 45b353d..104a90c 100644
 --- a/src/man/po/authselect.8.adoc.sv.po
 +++ b/src/man/po/authselect.8.adoc.sv.po
 @@ -5,7 +5,7 @@
@@ -18420,7 +18371,7 @@ index 45b353dfdc369220f8d3adccbc65e8a50f8bee67..104a90ca54e3ccb300bba7bd31c42c5b
  #. type: Plain text
  #: src/man/authselect.8.adoc:265
 diff --git a/src/man/po/authselect.8.adoc.tr.po b/src/man/po/authselect.8.adoc.tr.po
-index 475c90eddc87dac6739c231c51cb2b71928bc5bf..52c7037a789625ddf8a648af9090dfb7138037d8 100644
+index 475c90e..52c7037 100644
 --- a/src/man/po/authselect.8.adoc.tr.po
 +++ b/src/man/po/authselect.8.adoc.tr.po
 @@ -6,8 +6,8 @@
@@ -18526,7 +18477,7 @@ index 475c90eddc87dac6739c231c51cb2b71928bc5bf..52c7037a789625ddf8a648af9090dfb7
  #. type: Plain text
  #: src/man/authselect.8.adoc:183
 diff --git a/src/man/po/authselect.8.adoc.uk.po b/src/man/po/authselect.8.adoc.uk.po
-index add20b5a303f61ec60e721ccba5b9c672cb89a90..0ea1da69ce07ab7722c13b27414234a6620cbaa4 100644
+index add20b5..0ea1da6 100644
 --- a/src/man/po/authselect.8.adoc.uk.po
 +++ b/src/man/po/authselect.8.adoc.uk.po
 @@ -5,8 +5,8 @@
@@ -18584,7 +18535,7 @@ index add20b5a303f61ec60e721ccba5b9c672cb89a90..0ea1da69ce07ab7722c13b27414234a6
  #. type: Plain text
  #: src/man/authselect.8.adoc:183
 diff --git a/src/man/po/authselect.8.adoc.zh_CN.po b/src/man/po/authselect.8.adoc.zh_CN.po
-index 62452cd08788249aebb602b62e7ba1f813f29450..2ee65775f0e9faf8d26a4ffd16067e1657a8ad9b 100644
+index 62452cd..2ee6577 100644
 --- a/src/man/po/authselect.8.adoc.zh_CN.po
 +++ b/src/man/po/authselect.8.adoc.zh_CN.po
 @@ -7,7 +7,7 @@
@@ -18686,7 +18637,7 @@ index 62452cd08788249aebb602b62e7ba1f813f29450..2ee65775f0e9faf8d26a4ffd16067e16
  
  #. type: Plain text
 diff --git a/src/man/po/authselect.8.adoc.zh_TW.po b/src/man/po/authselect.8.adoc.zh_TW.po
-index 71b3239766fb468b017f9eb2e17bfb095085a7dd..13933db4903e6102753af8f61e9f1ab3f6458de4 100644
+index 71b3239..13933db 100644
 --- a/src/man/po/authselect.8.adoc.zh_TW.po
 +++ b/src/man/po/authselect.8.adoc.zh_TW.po
 @@ -6,7 +6,7 @@
@@ -18722,5 +18673,5 @@ index 71b3239766fb468b017f9eb2e17bfb095085a7dd..13933db4903e6102753af8f61e9f1ab3
  
  #. type: Plain text
 -- 
-2.38.1
+2.40.1
 
