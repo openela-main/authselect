@@ -1,0 +1,61 @@
+From 5a0b9009755b47253dfd5674f14166d17e27762e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
+Date: Wed, 29 Jan 2025 13:43:43 +0100
+Subject: [PATCH] profiles: merge groups records with [SUCCESS=merge]
+
+Services such as systemd-homed would like to advertise users which are
+part of system groups, such as "wheel". That only works if glibc's
+[SUCCESS=merge] feature is used in nsswitch.conf, so that group records
+from multiple sources are merged.
+
+This is documented here:
+
+https://www.freedesktop.org/software/systemd/man/latest/nss-systemd.html#Configuration%20in%20/etc/nsswitch.conf
+
+This hence adds [SUCCESS=merge] expressions to all NSS modules listed in
+the "groups" lines.
+
+This is a backport of 8d8adbd35c741d9038588386414ccbddb99bd31d
+
+(cherry picked from commit 9ee4c249c931bf0d0309ba043f880c08a32b32a1)
+---
+ profiles/minimal/nsswitch.conf | 2 +-
+ profiles/sssd/nsswitch.conf    | 2 +-
+ profiles/winbind/nsswitch.conf | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/profiles/minimal/nsswitch.conf b/profiles/minimal/nsswitch.conf
+index a39e4d32ebf79e8bf05f2db5753b01596222dc35..e383b215567d5ed077549f29d12280596699cb19 100644
+--- a/profiles/minimal/nsswitch.conf
++++ b/profiles/minimal/nsswitch.conf
+@@ -1,7 +1,7 @@
+ aliases:    files                                       {exclude if "with-custom-aliases"}
+ automount:  files                                       {exclude if "with-custom-automount"}
+ ethers:     files                                       {exclude if "with-custom-ethers"}
+-group:      files {if "with-altfiles":altfiles }systemd {exclude if "with-custom-group"}
++group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }systemd {exclude if "with-custom-group"}
+ hosts:      files dns myhostname                        {exclude if "with-custom-hosts"}
+ initgroups: files                                       {exclude if "with-custom-initgroups"}
+ netgroup:   files                                       {exclude if "with-custom-netgroup"}
+diff --git a/profiles/sssd/nsswitch.conf b/profiles/sssd/nsswitch.conf
+index f9e4e548b184628120decff3a71e2a266bb54f1e..8fa5d2ce7c61cc3db6be8b676cc07aa195b4f231 100644
+--- a/profiles/sssd/nsswitch.conf
++++ b/profiles/sssd/nsswitch.conf
+@@ -1,5 +1,5 @@
+ passwd:     {if "with-files-domain":sss files|files sss} systemd   {exclude if "with-custom-passwd"}
+-group:      {if "with-files-domain":sss files|files sss} systemd   {exclude if "with-custom-group"}
++group:      {if "with-files-domain":sss [SUCCESS=merge] files [SUCCESS=merge]|files [SUCCESS=merge] sss [SUCCESS=merge]} systemd   {exclude if "with-custom-group"}
+ netgroup:   sss files           {exclude if "with-custom-netgroup"}
+ automount:  sss files           {exclude if "with-custom-automount"}
+ services:   sss files           {exclude if "with-custom-services"}
+diff --git a/profiles/winbind/nsswitch.conf b/profiles/winbind/nsswitch.conf
+index 8a23bd71935eb26c5093e4b2080b1d91b6de5582..5446d804d5904ae71177bf4bd715dde04a2be3a3 100644
+--- a/profiles/winbind/nsswitch.conf
++++ b/profiles/winbind/nsswitch.conf
+@@ -1,2 +1,2 @@
+ passwd:     files winbind systemd    {exclude if "with-custom-passwd"}
+-group:      files winbind systemd    {exclude if "with-custom-group"}
++group:      files [SUCCESS=merge] winbind [SUCCESS=merge] systemd    {exclude if "with-custom-group"}
+-- 
+2.48.1
+

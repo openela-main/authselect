@@ -3,7 +3,7 @@
 
 Name:           authselect
 Version:        1.2.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Configures authentication and identity sources from supported profiles
 URL:            https://github.com/authselect/authselect
 
@@ -20,6 +20,9 @@ Patch0902:  0902-rhel9-remove-ecryptfs-support.patch
 Patch0903:  0903-rhel9-Revert-profiles-add-support-for-resolved.patch
 Patch0904:  0904-rhel9-remove-nis-support.patch
 Patch0905:  0905-rhel9-Revert-yescrypt.patch
+
+# Apply subsequent patches here to avoid constant changes to downstream only patches
+Patch0906:  0004-profiles-merge-groups-records-with-SUCCESS-merge.patch
 
 %global makedir %{_builddir}/%{name}-%{version}
 
@@ -292,6 +295,9 @@ exit 0
 exit 0
 
 %changelog
+* Wed Feb 5 2025 Pavel Březina <pbrezina@redhat.com> - 1.2.6-3
+- Support group merging in nsswitch.conf (RHEL-15779)
+
 * Thu Aug 3 2023 Pavel Březina <pbrezina@redhat.com> - 1.2.6-2
 - Fix Japanese translations (RHBZ #2153364)
 - Update translations (RHBZ #2189498)
