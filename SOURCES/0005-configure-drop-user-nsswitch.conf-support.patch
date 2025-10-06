@@ -1,0 +1,349 @@
+From 923fd37712eae8d99d514708e35894b6ea056628 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
+Date: Fri, 23 Feb 2024 13:24:25 +0100
+Subject: [PATCH 05/11] configure: drop user-nsswitch.conf support
+
+user-nsswitch.conf support is now completely dropped, it can no
+longer be enabled via configure flag
+---
+ scripts/manpages-build.sh.in       |   1 -
+ src/cli/main.c                     |   9 --
+ src/conf_macros.m4                 |  10 --
+ src/lib/files/nsswitch.c           | 156 -----------------------------
+ src/lib/paths.h                    |   3 -
+ src/man/authselect-profiles.5.adoc |   7 --
+ src/man/authselect.8.adoc          |  61 -----------
+ 7 files changed, 247 deletions(-)
+
+diff --git a/scripts/manpages-build.sh.in b/scripts/manpages-build.sh.in
+index 9e553f755a64717f854f3aba33c62140130ce18f..f4ac71e3a22723a52101bb9cbbadd79740515070 100755
+--- a/scripts/manpages-build.sh.in
++++ b/scripts/manpages-build.sh.in
+@@ -232,7 +232,6 @@ ATTR+=" -a AUTHSELECT_PAM_DIR=\"@AUTHSELECT_PAM_DIR@\""
+ ATTR+=" -a AUTHSELECT_PROFILE_DIR=\"@AUTHSELECT_PROFILE_DIR@\""
+ ATTR+=" -a AUTHSELECT_VENDOR_DIR=\"@AUTHSELECT_VENDOR_DIR@\""
+ ATTR+=" -a AUTHSELECT_BACKUP_DIR=\"@AUTHSELECT_BACKUP_DIR@\""
+-ATTR+=" -a BUILD_USER_NSSWITCH=\"@BUILD_USER_NSSWITCH@\""
+ ATTR+=" -a WITH_NIS_PROFILE=\"@WITH_NIS_PROFILE@\""
+ 
+ manpages-translate
+diff --git a/src/cli/main.c b/src/cli/main.c
+index 18486b50bc42f9937cc7294c3e5e2b32cafab5e0..fe06a5d8ababa58209690a97e84ae254b859cdc6 100644
+--- a/src/cli/main.c
++++ b/src/cli/main.c
+@@ -186,15 +186,6 @@ static errno_t activate(struct cli_cmdline *cmdline)
+         goto done;
+     }
+ 
+-#ifdef BUILD_USER_NSSWITCH
+-    maps = authselect_profile_nsswitch_maps(profile, features);
+-    if (maps == NULL) {
+-        ERROR("Unable to obtain nsswitch maps!");
+-        ret = EFAULT;
+-        goto done;
+-    }
+-#endif
+-
+     if (backup || backup_name != NULL || (enforce && !nobackup)) {
+         ret = perform_backup(quiet, 1, backup_name);
+         if (ret != EOK) {
+diff --git a/src/conf_macros.m4 b/src/conf_macros.m4
+index 9a81a6e194d16ecc0408e8631530cf7048fd9241..ae8fa0274e038e98115d000717487dbdbc04df4c 100644
+--- a/src/conf_macros.m4
++++ b/src/conf_macros.m4
+@@ -90,16 +90,6 @@ if test x"$with_compat" = xyes; then
+ fi
+ AM_CONDITIONAL([BUILD_COMPAT], [test x$with_compat = xyes])
+ 
+-AC_ARG_WITH([user-nsswitch],
+-    [AC_HELP_STRING([--with-user-nsswitch], [Build with user nsswitch support [no]])],
+-    [], with_user_nsswitch=no
+-)
+-AC_SUBST(BUILD_USER_NSSWITCH, 0)
+-if test x"$with_user_nsswitch" = xyes; then
+-    AC_DEFINE(BUILD_USER_NSSWITCH, 1, [whether to build with user nsswitch support])
+-    AC_SUBST(BUILD_USER_NSSWITCH, 1)
+-fi
+-
+ AC_ARG_WITH([nis-profile],
+     [AC_HELP_STRING([--with-nis-profile], [Install NIS profile [no]])],
+     [], with_nis_profile=no
+diff --git a/src/lib/files/nsswitch.c b/src/lib/files/nsswitch.c
+index 9598ea5cc5d5e30678acd91354629a87fc727be9..0e35380a2603316483cd6bcfdc58742c25b6a2b1 100644
+--- a/src/lib/files/nsswitch.c
++++ b/src/lib/files/nsswitch.c
+@@ -87,160 +87,6 @@ done:
+     return ret;
+ }
+ 
+-#ifdef BUILD_USER_NSSWITCH
+-
+-static errno_t
+-authselect_nsswitch_delete_maps(char **maps,
+-                                char *content)
+-{
+-    char *match_string;
+-    const char *map_name;
+-    size_t map_len;
+-    size_t orig_len;
+-    regmatch_t m[RE_NSS_MATCHES];
+-    regex_t regex;
+-    errno_t ret;
+-    int reret;
+-    int i;
+-
+-    if (string_is_empty(content)) {
+-        return EOK;
+-    }
+-
+-    orig_len = strlen(content);
+-
+-    reret = regcomp(&regex, RE_NSS, REG_EXTENDED | REG_NEWLINE);
+-    if (reret != REG_NOERROR) {
+-        ERROR("Unable to compile regular expression: regex error %d", reret);
+-        ret = EFAULT;
+-        goto done;
+-    }
+-
+-    match_string = content;
+-    while ((reret = regexec(&regex, match_string, 2, m, 0)) == REG_NOERROR) {
+-        map_name = match_string + m[1].rm_so;
+-        map_len = m[1].rm_eo - m[1].rm_so;
+-        for (i = 0; maps[i] != NULL; i++) {
+-            if (strncmp(map_name, maps[i], map_len) == 0) {
+-                string_remove_line(content, match_string, m[1].rm_so);
+-                break;
+-            }
+-        }
+-
+-        /* Since the whole line could have been removed, we have to find first
+-         * non-zero position. */
+-        match_string += m[0].rm_eo;
+-        while (*match_string == '\0' && match_string - content < orig_len) {
+-            match_string++;
+-        }
+-    }
+-
+-    if (reret != REG_NOMATCH) {
+-        ERROR("Unable to search string: regex error %d", reret);
+-        ret = EFAULT;
+-        goto done;
+-    }
+-
+-    string_replace_shake(content, orig_len);
+-
+-    ret = EOK;
+-
+-done:
+-    regfree(&regex);
+-
+-    return ret;
+-}
+-
+-errno_t
+-authselect_nsswitch_generate(const char *template,
+-                             const char **features,
+-                             char **_content)
+-{
+-    static const char *preambule = \
+-    "# If you want to make changes to nsswitch.conf please modify\n"
+-    "# " PATH_USER_NSSWITCH " and run 'authselect apply-changes'.\n"
+-    "#\n"
+-    "# Note that your changes may not be applied as they may be\n"
+-    "# overwritten by selected profile. Maps set in the authselect\n"
+-    "# profile takes always precedence and overwrites the same maps\n"
+-    "# set in the user file. Only maps that are not set by the profile\n"
+-    "# are applied from the user file.\n"
+-    "#\n"
+-    "# For example, if the profile sets:\n"
+-    "#     passwd: sss files\n"
+-    "# and " PATH_USER_NSSWITCH " contains:\n"
+-    "#     passwd: files\n"
+-    "#     hosts: files dns\n"
+-    "# the resulting generated nsswitch.conf will be:\n"
+-    "#     passwd: sss files # from profile\n"
+-    "#     hosts: files dns  # from user file\n\n";
+-    char *user_content = NULL;
+-    char *generated = NULL;
+-    char *content = NULL;
+-    char **maps = NULL;
+-    errno_t ret;
+-
+-    generated = template_generate(template, features);
+-    if (generated == NULL) {
+-        ret = ENOMEM;
+-        goto done;
+-    }
+-
+-    ret = textfile_read(PATH_USER_NSSWITCH, AUTHSELECT_FILE_SIZE_LIMIT,
+-                        &user_content);
+-    switch (ret) {
+-    case EOK:
+-        ret = authselect_nsswitch_find_maps(generated, &maps);
+-        if (ret != EOK) {
+-            goto done;
+-        }
+-
+-        ret = authselect_nsswitch_delete_maps(maps, user_content);
+-        if (ret != EOK) {
+-            goto done;
+-        }
+-
+-        if (string_is_empty(user_content)) {
+-            content = format("%s%s", preambule, generated);
+-            break;
+-        }
+-
+-        content = format("%s%s\n# Included from %s\n\n%s",
+-                         preambule, generated, PATH_USER_NSSWITCH,
+-                         user_content);
+-        break;
+-    case ENOENT:
+-        content = format("%s%s", preambule, generated);
+-        break;
+-    default:
+-        ERROR("Unable to read [%s] [%d]: %s", PATH_USER_NSSWITCH,
+-              ret, strerror(ret));
+-        goto done;
+-    }
+-
+-    if (content == NULL) {
+-        ret = ENOMEM;
+-        goto done;
+-    }
+-
+-    *_content = content;
+-
+-    ret = EOK;
+-
+-done:
+-    if (ret != EOK) {
+-        ERROR("Unable to generate nsswitch.conf [%d]: %s", ret, strerror(ret));
+-    }
+-
+-    free(user_content);
+-    free(generated);
+-    string_array_free(maps);
+-
+-    return ret;
+-}
+-
+-#else /* BUILD_USER_NSSWITCH */
+-
+ errno_t
+ authselect_nsswitch_generate(const char *template,
+                              const char **features,
+@@ -257,5 +103,3 @@ authselect_nsswitch_generate(const char *template,
+ 
+     return EOK;
+ }
+-
+-#endif /* BUILD_USER_NSSWITCH */
+diff --git a/src/lib/paths.h b/src/lib/paths.h
+index ca30b784f8bc63150f46ef08a26ec2bc5bcb3d67..41e4534b2efd421be8b9fea3b1fa9ebc3a699749 100644
+--- a/src/lib/paths.h
++++ b/src/lib/paths.h
+@@ -53,9 +53,6 @@
+ #define PATH_DCONF_DB    AUTHSELECT_CONFIG_DIR "/" FILE_DCONF_DB
+ #define PATH_DCONF_LOCK  AUTHSELECT_CONFIG_DIR "/" FILE_DCONF_LOCK
+ 
+-/* Path to files that can be modified by user. */
+-#define PATH_USER_NSSWITCH  AUTHSELECT_CONFIG_DIR "/user-nsswitch.conf"
+-
+ /* Names of symbolic links that points to generated files. */
+ #define PATH_SYMLINK_SYSTEM      AUTHSELECT_PAM_DIR "/" FILE_SYSTEM
+ #define PATH_SYMLINK_PASSWORD    AUTHSELECT_PAM_DIR "/" FILE_PASSWORD
+diff --git a/src/man/authselect-profiles.5.adoc b/src/man/authselect-profiles.5.adoc
+index 76a48fa25a13a7052eeac662d7f5f1b11f1f9493..648b7980cfaabeb02913650a35dfffa8e17b0aaa 100644
+--- a/src/man/authselect-profiles.5.adoc
++++ b/src/man/authselect-profiles.5.adoc
+@@ -53,14 +53,7 @@ done to the system.
+      the modules in the system-auth configuration file._
+ 
+ *nsswitch.conf*::
+-ifeval::[{BUILD_USER_NSSWITCH} == 0]
+     Name Service Switch configuration file.
+-endif::[]
+-ifeval::[{BUILD_USER_NSSWITCH} == 1]
+-    Name Service Switch configuration file. Only maps relevant to the profile
+-    must be set. Maps that are not specified by the profile are included from
+-    {AUTHSELECT_CONFIG_DIR}/user-nsswitch.conf.
+-endif::[]
+ 
+ *dconf-db*::
+     Changes to dconf database. The main uses case of this file is to set
+diff --git a/src/man/authselect.8.adoc b/src/man/authselect.8.adoc
+index 39758a6ca71e962ae942ce3608ac3bd0ffd3fabf..5d695cced0fbdc2cda78d61eb3f7b8d929cae692 100644
+--- a/src/man/authselect.8.adoc
++++ b/src/man/authselect.8.adoc
+@@ -261,67 +261,6 @@ These options are available with all commands.
+     the program execution but may indicate some undesired situations
+     (e.g. unexpected file in a profile directory).
+ 
+-ifeval::[{BUILD_USER_NSSWITCH} == 1]
+-NSSWITCH.CONF MANAGEMENT
+-------------------------
+-Authselect generates {AUTHSELECT_NSSWITCH_CONF} and does not allow any user
+-changes to this file. Such changes are detected and authselect will refuse to
+-write any system configuration unless a *--force* option is provided to
+-the *select* command. This mechanism prevents authselect from overwriting
+-anything that does not match any available profile.
+-
+-Any user changes to nsswitch maps must be done in file
+-{AUTHSELECT_CONFIG_DIR}/user-nsswitch.conf. When authselect generates
+-new _nsswitch.conf_ it reads this file and combines it with configuration
+-from selected profile. The profile configuration takes always precedence.
+-In other words, profiles do not have to set all nsswitch maps but can set only
+-those that are relevant to the profile. If a map is set within a profile,
+-it always overwrites the same map from _user-nsswitch.conf_.
+-
+-.Example 1
+-[subs="attributes"]
+-----
+-# "sssd" profile
+-$ cat {AUTHSELECT_PROFILE_DIR}/sssd/nsswitch.conf
+-passwd:     sss files systemd
+-group:      sss files systemd
+-netgroup:   sss files
+-automount:  sss files
+-services:   sss files
+-sudoers:    files sss {include if "with-sudo"}
+-
+-$ cat {AUTHSELECT_CONFIG_DIR}/user-nsswitch.conf
+-passwd: files sss
+-group: files sss
+-hosts: files dns myhostname
+-sudoers: files
+-
+-$ authselect select sssd
+-
+-# passwd and group maps from user-nsswitch.conf are ignored
+-$ cat {AUTHSELECT_NSSWITCH_CONF}
+-passwd:     sss files systemd
+-group:      sss files systemd
+-netgroup:   sss files
+-automount:  sss files
+-services:   sss files
+-hosts:      files dns myhostname
+-sudoers:    files
+-
+-$ authselect select sssd with-sudo
+-
+-# passwd, group and sudoers maps from user-nsswitch.conf are ignored
+-$ cat {AUTHSELECT_NSSWITCH_CONF}
+-passwd:     sss files systemd
+-group:      sss files systemd
+-netgroup:   sss files
+-automount:  sss files
+-services:   sss files
+-sudoers:    files sss
+-hosts:      files dns myhostname
+-----
+-endif::[]
+-
+ TROUBLESHOOTING
+ ---------------
+ 
+-- 
+2.42.0
+

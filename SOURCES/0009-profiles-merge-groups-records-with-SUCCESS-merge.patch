@@ -1,0 +1,78 @@
+From 8d8adbd35c741d9038588386414ccbddb99bd31d Mon Sep 17 00:00:00 2001
+From: Lennart Poettering <lennart@poettering.net>
+Date: Thu, 14 Dec 2023 14:16:11 +0100
+Subject: [PATCH 09/11] profiles: merge groups records with [SUCCESS=merge]
+
+Services such as systemd-homed would like to advertise users which are
+part of system groups, such as "wheel". That only works if glibc's
+[SUCCESS=merge] feature is used in nsswitch.conf, so that group records
+from multiple sources are merged.
+
+This is documented here:
+
+https://www.freedesktop.org/software/systemd/man/latest/nss-systemd.html#Configuration%20in%20/etc/nsswitch.conf
+
+This hence adds [SUCCESS=merge] expressions to all NSS modules listed in
+the "groups" lines.
+---
+ profiles/local/nsswitch.conf   | 2 +-
+ profiles/nis/nsswitch.conf     | 2 +-
+ profiles/sssd/nsswitch.conf    | 2 +-
+ profiles/winbind/nsswitch.conf | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/profiles/local/nsswitch.conf b/profiles/local/nsswitch.conf
+index c63692fc00c0815c5ba303ec5b48b6c9d7577df2..8582a955c8d03ea1d122a34cd273326d985bdcfb 100644
+--- a/profiles/local/nsswitch.conf
++++ b/profiles/local/nsswitch.conf
+@@ -1,7 +1,7 @@
+ # In order of likelihood of use to accelerate lookup.
+ passwd:     files {if "with-altfiles":altfiles }systemd
+ shadow:     files
+-group:      files {if "with-altfiles":altfiles }systemd
++group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }systemd
+ hosts:      files myhostname {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] }resolve [!UNAVAIL=return] dns
+ services:   files
+ netgroup:   files
+diff --git a/profiles/nis/nsswitch.conf b/profiles/nis/nsswitch.conf
+index 685f92c326bc7767ee167a77b7ba782672bf801f..c033812facee9159c76e2d514ac652e4de2e0b6b 100644
+--- a/profiles/nis/nsswitch.conf
++++ b/profiles/nis/nsswitch.conf
+@@ -1,7 +1,7 @@
+ # In order of likelihood of use to accelerate lookup.
+ passwd:     files {if "with-altfiles":altfiles }nis systemd
+ shadow:     files nis
+-group:      files {if "with-altfiles":altfiles }nis systemd
++group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }nis [SUCCESS=merge] systemd
+ hosts:      files myhostname {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] }resolve [!UNAVAIL=return] nis dns
+ services:   files nis
+ netgroup:   files nis
+diff --git a/profiles/sssd/nsswitch.conf b/profiles/sssd/nsswitch.conf
+index 58844a62c8f52f8f25477a811b02a5e401120f30..9f194bc82cee52d4e12779def95afa2f794f66bf 100644
+--- a/profiles/sssd/nsswitch.conf
++++ b/profiles/sssd/nsswitch.conf
+@@ -1,7 +1,7 @@
+ # In order of likelihood of use to accelerate lookup.
+ passwd:     {if "with-tlog":sss }files {if "with-altfiles":altfiles }{if not "with-tlog":sss }systemd
+ shadow:     files
+-group:      {if "with-tlog":sss }files {if "with-altfiles":altfiles }{if not "with-tlog":sss }systemd
++group:      {if "with-tlog":sss [SUCCESS=merge] }files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }{if not "with-tlog":sss [SUCCESS=merge] }systemd
+ hosts:      files myhostname {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] }resolve [!UNAVAIL=return] dns
+ services:   files sss
+ netgroup:   files sss
+diff --git a/profiles/winbind/nsswitch.conf b/profiles/winbind/nsswitch.conf
+index f0a97e42e084f94fddd329d4cb93d5b5d1da3360..1591ccb3ffa8bd10b8ff06a0620328e275d09241 100644
+--- a/profiles/winbind/nsswitch.conf
++++ b/profiles/winbind/nsswitch.conf
+@@ -1,7 +1,7 @@
+ # In order of likelihood of use to accelerate lookup.
+ passwd:     files {if "with-altfiles":altfiles }winbind systemd
+ shadow:     files
+-group:      files {if "with-altfiles":altfiles }winbind systemd
++group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }winbind [SUCCESS=merge] systemd
+ hosts:      files myhostname {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] }resolve [!UNAVAIL=return] dns
+ services:   files
+ netgroup:   files
+-- 
+2.42.0
+

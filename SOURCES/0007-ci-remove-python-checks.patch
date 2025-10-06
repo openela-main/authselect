@@ -1,0 +1,46 @@
+From 23936036c5b6cd51843a7f964998f5345877fa8e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
+Date: Fri, 23 Feb 2024 13:34:31 +0100
+Subject: [PATCH 07/11] ci: remove python checks
+
+With the compat tool gone, there is no other python script.
+---
+ .github/workflows/analyze.yml | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
+
+diff --git a/.github/workflows/analyze.yml b/.github/workflows/analyze.yml
+index 37682f068b586dc0e7ba34f1098f4009b88e7254..16b48b031519b81221de9248d65f076b2616b2f7 100644
+--- a/.github/workflows/analyze.yml
++++ b/.github/workflows/analyze.yml
+@@ -25,7 +25,7 @@ jobs:
+     - name: Initialize CodeQL
+       uses: github/codeql-action/init@v1
+       with:
+-        languages: cpp, python
++        languages: cpp
+         queries: +security-and-quality
+ 
+     - name: Autobuild
+@@ -33,19 +33,3 @@ jobs:
+ 
+     - name: Perform CodeQL Analysis
+       uses: github/codeql-action/analyze@v1
+-
+-  flake8:
+-    runs-on: ubuntu-latest
+-    permissions:
+-      contents: read
+-    steps:
+-    - name: Checkout repository
+-      uses: actions/checkout@v2
+-
+-    - name: Install flake8
+-      run: |
+-        sudo apt update
+-        sudo apt install -y flake8
+-
+-    - name: Execute flake8 on the repository
+-      run: flake8 --ignore=W503,E501 src/compat/authcompat.py.in.in .
+-- 
+2.42.0
+

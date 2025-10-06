@@ -1,0 +1,177 @@
+From 9321126e20898b23c19e168177d8a383a750fefb Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
+Date: Fri, 23 Feb 2024 12:51:37 +0100
+Subject: [PATCH 04/11] nis: install nis profile conditionally
+
+NIS profile is installed only if --with-nis-profile configure flag is
+given.
+---
+ profiles/Makefile.am                |  2 ++
+ rpm/authselect.spec.in              | 37 +++++++++++++++++++----------
+ scripts/manpages-build.sh.in        |  1 +
+ src/conf_macros.m4                  | 10 ++++++++
+ src/man/authselect-migration.7.adoc |  7 ++++++
+ 5 files changed, 45 insertions(+), 12 deletions(-)
+
+diff --git a/profiles/Makefile.am b/profiles/Makefile.am
+index bc437c158f6922afdba4ab261c73f31c93846118..61728cab77022ddc0bb35a3649a38123dc4987cf 100644
+--- a/profiles/Makefile.am
++++ b/profiles/Makefile.am
+@@ -15,6 +15,7 @@ dist_profile_local_DATA = \
+     $(top_srcdir)/profiles/local/dconf-locks \
+     $(NULL)
+ 
++if WITH_NIS_PROFILE
+ profile_nisdir = $(authselect_profile_dir)/nis
+ dist_profile_nis_DATA = \
+     $(top_srcdir)/profiles/nis/nsswitch.conf \
+@@ -28,6 +29,7 @@ dist_profile_nis_DATA = \
+     $(top_srcdir)/profiles/nis/dconf-db \
+     $(top_srcdir)/profiles/nis/dconf-locks \
+     $(NULL)
++endif
+ 
+ profile_sssddir = $(authselect_profile_dir)/sssd
+ dist_profile_sssd_DATA = \
+diff --git a/rpm/authselect.spec.in b/rpm/authselect.spec.in
+index e2c0482f1e7cfceac4aed3a3a4375bca031ac8c1..350ca953632f21be861c1ee75f25f71d107ca1ee 100644
+--- a/rpm/authselect.spec.in
++++ b/rpm/authselect.spec.in
+@@ -12,6 +12,13 @@ Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+ 
+ %global makedir %{_builddir}/%{name}-%{version}
+ 
++# Disable NIS profile on RHEL
++%if 0%{?rhel}
++%global with_nis_profile 0
++%else
++%global with_nis_profile 1
++%endif
++
+ # Set the default profile
+ %{?fedora:%global default_profile local with-silent-lastlog}
+ %{?rhel:%global default_profile local}
+@@ -75,7 +82,11 @@ done
+ 
+ %build
+ autoreconf -if
+-%configure
++%configure \
++%if %{with_nis_profile}
++    --with-nis-profile \
++%endif
++    %{nil}
+ %make_build
+ 
+ %check
+@@ -123,7 +134,6 @@ find $RPM_BUILD_ROOT -name "*.a" -exec %__rm -f {} \;
+ %dir %{_datadir}/authselect/vendor
+ %dir %{_datadir}/authselect/default
+ %dir %{_datadir}/authselect/default/local/
+-%dir %{_datadir}/authselect/default/nis/
+ %dir %{_datadir}/authselect/default/sssd/
+ %dir %{_datadir}/authselect/default/winbind/
+ %{_datadir}/authselect/default/local/dconf-db
+@@ -136,16 +146,6 @@ find $RPM_BUILD_ROOT -name "*.a" -exec %__rm -f {} \;
+ %{_datadir}/authselect/default/local/REQUIREMENTS
+ %{_datadir}/authselect/default/local/smartcard-auth
+ %{_datadir}/authselect/default/local/system-auth
+-%{_datadir}/authselect/default/nis/dconf-db
+-%{_datadir}/authselect/default/nis/dconf-locks
+-%{_datadir}/authselect/default/nis/fingerprint-auth
+-%{_datadir}/authselect/default/nis/nsswitch.conf
+-%{_datadir}/authselect/default/nis/password-auth
+-%{_datadir}/authselect/default/nis/postlogin
+-%{_datadir}/authselect/default/nis/README
+-%{_datadir}/authselect/default/nis/REQUIREMENTS
+-%{_datadir}/authselect/default/nis/smartcard-auth
+-%{_datadir}/authselect/default/nis/system-auth
+ %{_datadir}/authselect/default/sssd/dconf-db
+ %{_datadir}/authselect/default/sssd/dconf-locks
+ %{_datadir}/authselect/default/sssd/fingerprint-auth
+@@ -166,6 +166,19 @@ find $RPM_BUILD_ROOT -name "*.a" -exec %__rm -f {} \;
+ %{_datadir}/authselect/default/winbind/REQUIREMENTS
+ %{_datadir}/authselect/default/winbind/smartcard-auth
+ %{_datadir}/authselect/default/winbind/system-auth
++%if %{with_nis_profile}
++%dir %{_datadir}/authselect/default/nis/
++%{_datadir}/authselect/default/nis/dconf-db
++%{_datadir}/authselect/default/nis/dconf-locks
++%{_datadir}/authselect/default/nis/fingerprint-auth
++%{_datadir}/authselect/default/nis/nsswitch.conf
++%{_datadir}/authselect/default/nis/password-auth
++%{_datadir}/authselect/default/nis/postlogin
++%{_datadir}/authselect/default/nis/README
++%{_datadir}/authselect/default/nis/REQUIREMENTS
++%{_datadir}/authselect/default/nis/smartcard-auth
++%{_datadir}/authselect/default/nis/system-auth
++%endif
+ %{_libdir}/libauthselect.so.*
+ %{_mandir}/man5/authselect-profiles.5*
+ %{_datadir}/doc/authselect/COPYING
+diff --git a/scripts/manpages-build.sh.in b/scripts/manpages-build.sh.in
+index 314bb2b2a0e4432632478230ab5ff5b3dce2943f..9e553f755a64717f854f3aba33c62140130ce18f 100755
+--- a/scripts/manpages-build.sh.in
++++ b/scripts/manpages-build.sh.in
+@@ -233,6 +233,7 @@ ATTR+=" -a AUTHSELECT_PROFILE_DIR=\"@AUTHSELECT_PROFILE_DIR@\""
+ ATTR+=" -a AUTHSELECT_VENDOR_DIR=\"@AUTHSELECT_VENDOR_DIR@\""
+ ATTR+=" -a AUTHSELECT_BACKUP_DIR=\"@AUTHSELECT_BACKUP_DIR@\""
+ ATTR+=" -a BUILD_USER_NSSWITCH=\"@BUILD_USER_NSSWITCH@\""
++ATTR+=" -a WITH_NIS_PROFILE=\"@WITH_NIS_PROFILE@\""
+ 
+ manpages-translate
+ 
+diff --git a/src/conf_macros.m4 b/src/conf_macros.m4
+index 17c1629723066b0c4e354051366ce209428af6c1..9a81a6e194d16ecc0408e8631530cf7048fd9241 100644
+--- a/src/conf_macros.m4
++++ b/src/conf_macros.m4
+@@ -99,3 +99,13 @@ if test x"$with_user_nsswitch" = xyes; then
+     AC_DEFINE(BUILD_USER_NSSWITCH, 1, [whether to build with user nsswitch support])
+     AC_SUBST(BUILD_USER_NSSWITCH, 1)
+ fi
++
++AC_ARG_WITH([nis-profile],
++    [AC_HELP_STRING([--with-nis-profile], [Install NIS profile [no]])],
++    [], with_nis_profile=no
++)
++AM_CONDITIONAL([WITH_NIS_PROFILE], [test x$with_nis_profile = xyes])
++AC_SUBST(WITH_NIS_PROFILE, 0)
++if test x"$with_nis_profile" = xyes; then
++    AC_SUBST(WITH_NIS_PROFILE, 1)
++fi
+diff --git a/src/man/authselect-migration.7.adoc b/src/man/authselect-migration.7.adoc
+index 3513a7e7cd3d7cc0045167e8224248c5be90ab2c..8cc58e60301925974fdb738c5b9a746749981df8 100644
+--- a/src/man/authselect-migration.7.adoc
++++ b/src/man/authselect-migration.7.adoc
+@@ -72,7 +72,12 @@ configuration file for required services.
+ |--enablesssd --enablesssdauth       |sssd
+ |--enablekrb5                        |sssd
+ |--enablewinbind --enablewinbindauth |winbind
++ifeval::[{WITH_NIS_PROFILE} == 1]
+ |--enablenis                         |nis
++endif::[]
++ifeval::[{WITH_NIS_PROFILE} != 1]
++|--enablenis                         |none
++endif::[]
+ |=========================================================
+ 
+ .Relation of authconfig options to authselect profile features
+@@ -199,6 +204,7 @@ will perform an initial setup which involves creating a Kerberos keytab and
+ running `adcli` to join the domain. It also makes changes to `smb.conf`. You
+ can then tune it up by modifying {sysconfdir}/samba/smb.conf.
+ 
++ifeval::[{WITH_NIS_PROFILE} == 1]
+ NIS
+ ~~~
+ There are several places that needs to be configured in order to make
+@@ -227,6 +233,7 @@ $ domainname mydomain
+ $ setsebool -P allow_ypbind 1
+ ----
+ 
++endif::[]
+ PASSWORD QUALITY
+ ~~~~~~~~~~~~~~~~
+ Authselect enables `pam_pwquality` module to enforce password quality
+-- 
+2.42.0
+
