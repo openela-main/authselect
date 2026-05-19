@@ -1,7 +1,7 @@
-From 054c83d1a40d5e0f98230d0f6ac34bd7ecdf383e Mon Sep 17 00:00:00 2001
+From 89bcfe5ed055ac1e80d9c782b178b7a4577e62ad Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
 Date: Fri, 23 Feb 2024 15:49:09 +0100
-Subject: [PATCH 1/3] rhel10: remove systemd-homed
+Subject: [PATCH 1/4] rhel10: remove systemd-homed
 
 systemd-homed is not present in rhel.
 ---
@@ -23,10 +23,10 @@ systemd-homed is not present in rhel.
  15 files changed, 53 deletions(-)
 
 diff --git a/profiles/local/README b/profiles/local/README
-index 03f602441fe95ee280b575508f20d1f1de949b25..eedb298090b5b7c068ee1dfec0ee36c8b3086af4 100644
+index 5108590d509e9694f28358d5c4c2e60a2be99183..ad762bc2d4a55ba44fe53dba035d5c220a8b877f 100644
 --- a/profiles/local/README
 +++ b/profiles/local/README
-@@ -54,9 +54,6 @@ with-mdns4::
+@@ -57,9 +57,6 @@ with-mdns4::
  with-mdns6::
      Enable multicast DNS over IPv6.
  
@@ -97,10 +97,10 @@ index 7f3c56adb2329dd4a08b1cb08b63e8d0d9b13c86..290cd24eb9c50f196d6fc68a3688f097
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/nis/README b/profiles/nis/README
-index e3a1a0b986689bfd43d9531464bcd8fa7a0f5237..745138bbdb1e045db41990dcb8864477d3408e36 100644
+index 2f91de7c397b67a28fd22df2ba9f08cebb861007..566509f541449cbc9eda9b9f46edd14d3773bb6c 100644
 --- a/profiles/nis/README
 +++ b/profiles/nis/README
-@@ -65,9 +65,6 @@ with-mdns4::
+@@ -68,9 +68,6 @@ with-mdns4::
  with-mdns6::
      Enable multicast DNS over IPv6.
  
@@ -182,10 +182,10 @@ index 0bd022ee2286f37a5becb0daba2a5813693300a9..40a1bf74aaf3d721c4d720938e57766b
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/sssd/README b/profiles/sssd/README
-index f7aaba8ecca4bc18a0e57d2334c2030fd26fda0d..a497da5dcffd0a03a122677c49ee2f8021927b04 100644
+index 33aa59c0d0b367f596c162ff017dd1b314be3c06..77d94f1890556dc17e0d7dc56f45da41dcf7ef22 100644
 --- a/profiles/sssd/README
 +++ b/profiles/sssd/README
-@@ -106,9 +106,6 @@ with-gssapi::
+@@ -109,9 +109,6 @@ with-gssapi::
  with-subid::
      Enable SSSD as a source of subid database in /etc/nsswitch.conf.
  
@@ -196,16 +196,19 @@ index f7aaba8ecca4bc18a0e57d2334c2030fd26fda0d..a497da5dcffd0a03a122677c49ee2f80
      Do not add nullok parameter to pam_unix.
  
 diff --git a/profiles/sssd/REQUIREMENTS b/profiles/sssd/REQUIREMENTS
-index 6aaf7c771f7c1bcbf2aee7152422acc9d53c71f5..b36f6069a54a5f711a10aa0700f33e1a8e37794e 100644
+index 8137f4b2f9aca5654c15802e21390e6b0fa315cb..ef853121810621aae6c45cd63ae619a8473dd91e 100644
 --- a/profiles/sssd/REQUIREMENTS
 +++ b/profiles/sssd/REQUIREMENTS
-@@ -25,6 +25,3 @@ Make sure that SSSD service is configured and enabled. See SSSD documentation fo
+@@ -25,9 +25,6 @@ Make sure that SSSD service is configured and enabled. See SSSD documentation fo
  - with-tlog is selected, make sure that session recording is enabled in SSSD              {include if "with-tlog"}
                                                                                            {include if "with-libvirt"}
  - with-libvirt is selected, make sure that the libvirt NSS plugins are installed          {include if "with-libvirt"}
 -                                                                                          {include if "with-systemd-homed"}
 -- with-systemd-homed is selected, make sure that the system-homed service is enabled      {include if "with-systemd-homed"}
 -  - systemctl enable --now systemd-homed.service                                          {include if "with-systemd-homed"}
+                                                                                           {include if "with-switchable-auth"}
+ - with-switchable-auth is selected, make sure to enable it in sssd.conf                   {include if "with-switchable-auth"}
+   - set "pam_json_services = list-of-services" in [pam] section                           {include if "with-switchable-auth"}
 diff --git a/profiles/sssd/password-auth b/profiles/sssd/password-auth
 index 97c33b678706e7eeb86bf45251baa41739f2940f..f468507b938ea2a7ac305a65f5fdea14a1ae10f1 100644
 --- a/profiles/sssd/password-auth
@@ -277,10 +280,10 @@ index 90c3504a414f0a151475cc207285b230fec381b1..870e4d7024066e3e40786bde6c3c39c7
  session     optional                                     pam_oddjob_mkhomedir.so                                {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/winbind/README b/profiles/winbind/README
-index f65870d1d03da6465ad446dac87ed141d7115d8b..8844e1da2003a0266dfe8937774d6d6f7dad0210 100644
+index 24e6fc891ab14ac6f7aab7e86a388ae81f615b7f..11f305d5a2f18e82fd8393191e496d25c8a1f7fc 100644
 --- a/profiles/winbind/README
 +++ b/profiles/winbind/README
-@@ -75,9 +75,6 @@ with-mdns4::
+@@ -78,9 +78,6 @@ with-mdns4::
  with-mdns6::
      Enable multicast DNS over IPv6.
  
@@ -372,5 +375,5 @@ index 2326c859284c5823c5a6d34390d794dbf33110d2..612143d10fe502d7f6ed636b4fba6cc6
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 -- 
-2.42.0
+2.52.0
 

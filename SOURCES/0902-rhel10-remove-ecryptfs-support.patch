@@ -1,7 +1,7 @@
-From 3167eaadde7a3f997925172b8d77cb380bf0d9d8 Mon Sep 17 00:00:00 2001
+From cc9a698d03a581b9e73e532a1020a9533e084329 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
 Date: Mon, 10 Jun 2019 10:53:15 +0200
-Subject: [PATCH 2/3] rhel10: remove ecryptfs support
+Subject: [PATCH 2/4] rhel10: remove ecryptfs support
 
 ecryptfs-utils is not present in rhel.
 ---
@@ -25,7 +25,7 @@ ecryptfs-utils is not present in rhel.
  17 files changed, 2 insertions(+), 34 deletions(-)
 
 diff --git a/profiles/nis/README b/profiles/nis/README
-index 745138bbdb1e045db41990dcb8864477d3408e36..3e2f8b01fa37f8c7060a9c263f66c3df9782061d 100644
+index 566509f541449cbc9eda9b9f46edd14d3773bb6c..660ebd1e79a7e28da64e8552ac1218b1229d48f5 100644
 --- a/profiles/nis/README
 +++ b/profiles/nis/README
 @@ -21,9 +21,6 @@ with-mkhomedir::
@@ -63,7 +63,7 @@ index 927fbcbda8fa4e910e29c88a3806fb5265bbc7bc..56a51d9eebb2987da340805ddb4e4a67
  session     optional                                     pam_oddjob_mkhomedir.so                                 {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/nis/postlogin b/profiles/nis/postlogin
-index 137cd00dc65ee9ea83123f1d3a6f7ba04f0aea04..04a11f049bc1e220c9064fba7b46eb243ddd4996 100644
+index 2f89ee94cade90686ac4e0e326efe84d7d8211aa..4e1bdf83c4d6973eb5838a9d94b36c9fe40347f4 100644
 --- a/profiles/nis/postlogin
 +++ b/profiles/nis/postlogin
 @@ -1,7 +1,3 @@
@@ -87,7 +87,7 @@ index 40a1bf74aaf3d721c4d720938e57766bfe651e47..74cf6ece9ce0b1b64b122fd2309ebf5d
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/sssd/README b/profiles/sssd/README
-index a497da5dcffd0a03a122677c49ee2f8021927b04..2038a32b682f36d9eef51fda138730abc9666279 100644
+index 77d94f1890556dc17e0d7dc56f45da41dcf7ef22..ba9b44071a0ca906ad00c09f6fd767ea686efcb5 100644
 --- a/profiles/sssd/README
 +++ b/profiles/sssd/README
 @@ -35,9 +35,6 @@ with-mkhomedir::
@@ -125,7 +125,7 @@ index f468507b938ea2a7ac305a65f5fdea14a1ae10f1..c15121ad00ff00dfcd1743341594c853
  session     optional                                     pam_oddjob_mkhomedir.so                                {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/sssd/postlogin b/profiles/sssd/postlogin
-index 137cd00dc65ee9ea83123f1d3a6f7ba04f0aea04..04a11f049bc1e220c9064fba7b46eb243ddd4996 100644
+index 2f89ee94cade90686ac4e0e326efe84d7d8211aa..4e1bdf83c4d6973eb5838a9d94b36c9fe40347f4 100644
 --- a/profiles/sssd/postlogin
 +++ b/profiles/sssd/postlogin
 @@ -1,7 +1,3 @@
@@ -161,7 +161,7 @@ index 870e4d7024066e3e40786bde6c3c39c7ba8d62c0..4ea19acebe2208f9e21676bf0ae0a92e
  session     optional                                     pam_oddjob_mkhomedir.so                                {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/winbind/README b/profiles/winbind/README
-index 8844e1da2003a0266dfe8937774d6d6f7dad0210..7397bb9a6c8086b9720cc355d98de70b8107e79b 100644
+index 11f305d5a2f18e82fd8393191e496d25c8a1f7fc..f246fb43bb68f427fa0782d9662af02bcb4bf0ef 100644
 --- a/profiles/winbind/README
 +++ b/profiles/winbind/README
 @@ -33,9 +33,6 @@ with-mkhomedir::
@@ -199,7 +199,7 @@ index 8d1682b9301c2b9c92292a41120f69611f148108..8b260fa06f5ed8494d1f6fac74517d3a
  session     optional                                     pam_oddjob_mkhomedir.so                                 {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/winbind/postlogin b/profiles/winbind/postlogin
-index 137cd00dc65ee9ea83123f1d3a6f7ba04f0aea04..04a11f049bc1e220c9064fba7b46eb243ddd4996 100644
+index 2f89ee94cade90686ac4e0e326efe84d7d8211aa..4e1bdf83c4d6973eb5838a9d94b36c9fe40347f4 100644
 --- a/profiles/winbind/postlogin
 +++ b/profiles/winbind/postlogin
 @@ -1,7 +1,3 @@
@@ -246,5 +246,5 @@ index 8cc58e60301925974fdb738c5b9a746749981df8..9056913dee9eef1590c8590d3cc0b510
  authconfig --enablewinbind --enablewinbindauth --winbindjoin=Administrator --updateall
  realm join -U Administrator --client-software=winbind WINBINDDOMAIN
 -- 
-2.42.0
+2.52.0
 
