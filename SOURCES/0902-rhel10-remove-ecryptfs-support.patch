@@ -1,4 +1,4 @@
-From cc9a698d03a581b9e73e532a1020a9533e084329 Mon Sep 17 00:00:00 2001
+From 2238bd5d468276f45367fda96a925b76dccd56df Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
 Date: Mon, 10 Jun 2019 10:53:15 +0200
 Subject: [PATCH 2/4] rhel10: remove ecryptfs support
@@ -25,7 +25,7 @@ ecryptfs-utils is not present in rhel.
  17 files changed, 2 insertions(+), 34 deletions(-)
 
 diff --git a/profiles/nis/README b/profiles/nis/README
-index 566509f541449cbc9eda9b9f46edd14d3773bb6c..660ebd1e79a7e28da64e8552ac1218b1229d48f5 100644
+index 5fd921abc345eadd702fc175c9a08350a662a9c0..b7d3d98beb408b903f2f3a49631fcb139021797d 100644
 --- a/profiles/nis/README
 +++ b/profiles/nis/README
 @@ -21,9 +21,6 @@ with-mkhomedir::
@@ -87,7 +87,7 @@ index 40a1bf74aaf3d721c4d720938e57766bfe651e47..74cf6ece9ce0b1b64b122fd2309ebf5d
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/sssd/README b/profiles/sssd/README
-index 77d94f1890556dc17e0d7dc56f45da41dcf7ef22..ba9b44071a0ca906ad00c09f6fd767ea686efcb5 100644
+index 1c1a0bfdd1ddc7992f21ea86e683a7dc56b538d5..255e305fb27a3aa104776edb3ef72de27adac496 100644
 --- a/profiles/sssd/README
 +++ b/profiles/sssd/README
 @@ -35,9 +35,6 @@ with-mkhomedir::
@@ -161,7 +161,7 @@ index 870e4d7024066e3e40786bde6c3c39c7ba8d62c0..4ea19acebe2208f9e21676bf0ae0a92e
  session     optional                                     pam_oddjob_mkhomedir.so                                {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/winbind/README b/profiles/winbind/README
-index 11f305d5a2f18e82fd8393191e496d25c8a1f7fc..f246fb43bb68f427fa0782d9662af02bcb4bf0ef 100644
+index d2ed3bcd72fb4fd4b0c29d20a6724b7d4669d20c..62ecd04a7e22c7ebabfdbeb7cce3e19eb8c90a36 100644
 --- a/profiles/winbind/README
 +++ b/profiles/winbind/README
 @@ -33,9 +33,6 @@ with-mkhomedir::
@@ -246,5 +246,5 @@ index 8cc58e60301925974fdb738c5b9a746749981df8..9056913dee9eef1590c8590d3cc0b510
  authconfig --enablewinbind --enablewinbindauth --winbindjoin=Administrator --updateall
  realm join -U Administrator --client-software=winbind WINBINDDOMAIN
 -- 
-2.52.0
+2.54.0
 

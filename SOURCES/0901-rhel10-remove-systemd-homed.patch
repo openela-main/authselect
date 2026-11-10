@@ -1,4 +1,4 @@
-From 89bcfe5ed055ac1e80d9c782b178b7a4577e62ad Mon Sep 17 00:00:00 2001
+From 21406f73b474b8f80ec8ed3f75d84cb5af41eb36 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
 Date: Fri, 23 Feb 2024 15:49:09 +0100
 Subject: [PATCH 1/4] rhel10: remove systemd-homed
@@ -23,10 +23,10 @@ systemd-homed is not present in rhel.
  15 files changed, 53 deletions(-)
 
 diff --git a/profiles/local/README b/profiles/local/README
-index 5108590d509e9694f28358d5c4c2e60a2be99183..ad762bc2d4a55ba44fe53dba035d5c220a8b877f 100644
+index dc326dd32bfa8a3c0263852021e2f5c0a8430f54..37a6427d0b98ff999c7fba3411548833c04ab341 100644
 --- a/profiles/local/README
 +++ b/profiles/local/README
-@@ -57,9 +57,6 @@ with-mdns4::
+@@ -62,9 +62,6 @@ with-mdns4::
  with-mdns6::
      Enable multicast DNS over IPv6.
  
@@ -97,10 +97,10 @@ index 7f3c56adb2329dd4a08b1cb08b63e8d0d9b13c86..290cd24eb9c50f196d6fc68a3688f097
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/nis/README b/profiles/nis/README
-index 2f91de7c397b67a28fd22df2ba9f08cebb861007..566509f541449cbc9eda9b9f46edd14d3773bb6c 100644
+index c9a99ab2a2869c8e45b94f5b30b21e47dc7bff20..5fd921abc345eadd702fc175c9a08350a662a9c0 100644
 --- a/profiles/nis/README
 +++ b/profiles/nis/README
-@@ -68,9 +68,6 @@ with-mdns4::
+@@ -73,9 +73,6 @@ with-mdns4::
  with-mdns6::
      Enable multicast DNS over IPv6.
  
@@ -182,10 +182,10 @@ index 0bd022ee2286f37a5becb0daba2a5813693300a9..40a1bf74aaf3d721c4d720938e57766b
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/sssd/README b/profiles/sssd/README
-index 33aa59c0d0b367f596c162ff017dd1b314be3c06..77d94f1890556dc17e0d7dc56f45da41dcf7ef22 100644
+index c9b0d518b50056fde9f3d6b39b6abf8faf946176..1c1a0bfdd1ddc7992f21ea86e683a7dc56b538d5 100644
 --- a/profiles/sssd/README
 +++ b/profiles/sssd/README
-@@ -109,9 +109,6 @@ with-gssapi::
+@@ -114,9 +114,6 @@ with-gssapi::
  with-subid::
      Enable SSSD as a source of subid database in /etc/nsswitch.conf.
  
@@ -280,10 +280,10 @@ index 90c3504a414f0a151475cc207285b230fec381b1..870e4d7024066e3e40786bde6c3c39c7
  session     optional                                     pam_oddjob_mkhomedir.so                                {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/winbind/README b/profiles/winbind/README
-index 24e6fc891ab14ac6f7aab7e86a388ae81f615b7f..11f305d5a2f18e82fd8393191e496d25c8a1f7fc 100644
+index b470750ade0b9f943820ddd05208e4a81e2eeed2..d2ed3bcd72fb4fd4b0c29d20a6724b7d4669d20c 100644
 --- a/profiles/winbind/README
 +++ b/profiles/winbind/README
-@@ -78,9 +78,6 @@ with-mdns4::
+@@ -83,9 +83,6 @@ with-mdns4::
  with-mdns6::
      Enable multicast DNS over IPv6.
  
@@ -375,5 +375,5 @@ index 2326c859284c5823c5a6d34390d794dbf33110d2..612143d10fe502d7f6ed636b4fba6cc6
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 -- 
-2.52.0
+2.54.0
 

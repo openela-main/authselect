@@ -1,4 +1,4 @@
-From abdef39cb04eee5ad2507252f917d0f2e3fdcb5d Mon Sep 17 00:00:00 2001
+From 6d484957b86576101fe25fd013b920fe6b7cd0d4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
 Date: Fri, 2 Aug 2024 12:26:38 +0200
 Subject: [PATCH 4/4] rhel10: move myhostname after dns to fix hostname --fqdn
@@ -16,57 +16,57 @@ in rhel8 and rhel9.
  4 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/profiles/local/nsswitch.conf b/profiles/local/nsswitch.conf
-index bbcbf2b684e9c1e1755c0afd619e2c3b8e9c6b99..37a13b0e254c01b2b358bd9e85f742ade693d0ce 100644
+index d45726d73eb62e3bbce5f049c4fcce188aaabd86..c24d42d005cc0f54482dd40cae8367b3ec8fbed3 100644
 --- a/profiles/local/nsswitch.conf
 +++ b/profiles/local/nsswitch.conf
-@@ -2,7 +2,7 @@
- passwd:     files {if "with-altfiles":altfiles }systemd
+@@ -3,7 +3,7 @@ passwd:     files {if "with-altfiles":altfiles }systemd
  shadow:     files systemd
- group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }systemd
+ group:      files {if "with-altfiles":altfiles }systemd {exclude if "with-group-merging"}
+ group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }systemd [SUCCESS=merge] {include if "with-group-merging"}
 -hosts:      files myhostname {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] } dns
 +hosts:      files {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] } dns myhostname
  services:   files
  netgroup:   files
  automount:  files
 diff --git a/profiles/nis/nsswitch.conf b/profiles/nis/nsswitch.conf
-index 2e7b63dd36f46185c513779b09c6123bd7e7a373..109f44129ef034795ae5585e6a7b2f12f847084b 100644
+index a70ecc24eec4bc93fc58867477a53720007f375e..4eca6f20f7f89ad8a17f0837f3503ae1432fe87b 100644
 --- a/profiles/nis/nsswitch.conf
 +++ b/profiles/nis/nsswitch.conf
-@@ -2,7 +2,7 @@
- passwd:     files {if "with-altfiles":altfiles }nis systemd
+@@ -3,7 +3,7 @@ passwd:     files {if "with-altfiles":altfiles }nis systemd
  shadow:     files nis systemd
- group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }nis [SUCCESS=merge] systemd
+ group:      files {if "with-altfiles":altfiles }nis systemd {exclude if "with-group-merging"}
+ group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }nis [SUCCESS=merge] systemd [SUCCESS=merge] {include if "with-group-merging"}
 -hosts:      files myhostname {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] }nis dns
 +hosts:      files {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] }nis dns myhostname
  services:   files nis
  netgroup:   files nis
  automount:  files nis
 diff --git a/profiles/sssd/nsswitch.conf b/profiles/sssd/nsswitch.conf
-index b8138a3c07e3c54612a0cbf3c0b721bedd821966..27ccf10befc3fa7e5371459cc9f6f4cd1fcf5d10 100644
+index 955048b6b869b41003eb3f57ef6297188da67141..9322c76b979adc6e41ea6a4d1a04db4a8fd147a3 100644
 --- a/profiles/sssd/nsswitch.conf
 +++ b/profiles/sssd/nsswitch.conf
-@@ -2,7 +2,7 @@
- passwd:     {if "with-tlog":sss }files {if "with-altfiles":altfiles }{if not "with-tlog":sss }systemd
+@@ -3,7 +3,7 @@ passwd:     {if "with-tlog":sss }files {if "with-altfiles":altfiles }{if not "wi
  shadow:     files systemd
- group:      {if "with-tlog":sss [SUCCESS=merge] }files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }{if not "with-tlog":sss [SUCCESS=merge] }systemd
+ group:      {if "with-tlog":sss }files {if "with-altfiles":altfiles }{if not "with-tlog":sss }systemd {exclude if "with-group-merging"}
+ group:      {if "with-tlog":sss [SUCCESS=merge] }files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }{if not "with-tlog":sss [SUCCESS=merge] }systemd [SUCCESS=merge] {include if "with-group-merging"}
 -hosts:      files myhostname {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] } dns
 +hosts:      files {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] } dns myhostname
  services:   files sss
  netgroup:   files sss
  sudoers:    files sss {include if "with-sudo"}
 diff --git a/profiles/winbind/nsswitch.conf b/profiles/winbind/nsswitch.conf
-index c7d57595b0c4e2f8c492b8e4f1a9c56f203337c5..64600c57329459e2fa78c6514f6cc8913e64d23a 100644
+index 76a0a8a7babc24df949e1d8b246f36a3a2e14d93..873538c44e381afe1663f485fd4675d9afe78135 100644
 --- a/profiles/winbind/nsswitch.conf
 +++ b/profiles/winbind/nsswitch.conf
-@@ -2,7 +2,7 @@
- passwd:     files {if "with-altfiles":altfiles }winbind systemd
+@@ -3,7 +3,7 @@ passwd:     files {if "with-altfiles":altfiles }winbind systemd
  shadow:     files systemd
- group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }winbind [SUCCESS=merge] systemd
+ group:      files {if "with-altfiles":altfiles }winbind systemd {exclude if "with-group-merging"}
+ group:      files [SUCCESS=merge] {if "with-altfiles":altfiles [SUCCESS=merge] }winbind [SUCCESS=merge] systemd [SUCCESS=merge] {include if "with-group-merging"}
 -hosts:      files myhostname {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] } dns
 +hosts:      files {if "with-libvirt":libvirt libvirt_guest }{if "with-mdns4" and "with-mdns6":mdns_minimal [NOTFOUND=return] }{if "with-mdns4" and not "with-mdns6":mdns4_minimal [NOTFOUND=return] }{if not "with-mdns4" and "with-mdns6":mdns6_minimal [NOTFOUND=return] } dns myhostname
  services:   files
  netgroup:   files
  automount:  files
 -- 
-2.52.0
+2.54.0
 
