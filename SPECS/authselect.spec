@@ -2,17 +2,13 @@
 %define _empty_manifest_terminate_build 0
 
 Name:           authselect
-Version:        1.2.6
-Release:        3%{?dist}
+Version:        1.2.7
+Release:        1%{?dist}
 Summary:        Configures authentication and identity sources from supported profiles
 URL:            https://github.com/authselect/authselect
 
 License:        GPLv3+
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
-
-Patch0001:  0001-po-update-translations.patch
-Patch0002:  0002-profiles-do-not-try-to-change-password-via-sssd-for-.patch
-Patch0003:  0003-po-update-translations.patch
 
 ### Downstream Patches ###
 Patch0901:  0901-rhel9-remove-mention-of-Fedora-Change-page-in-compat.patch
@@ -20,9 +16,6 @@ Patch0902:  0902-rhel9-remove-ecryptfs-support.patch
 Patch0903:  0903-rhel9-Revert-profiles-add-support-for-resolved.patch
 Patch0904:  0904-rhel9-remove-nis-support.patch
 Patch0905:  0905-rhel9-Revert-yescrypt.patch
-
-# Apply subsequent patches here to avoid constant changes to downstream only patches
-Patch0906:  0004-profiles-merge-groups-records-with-SUCCESS-merge.patch
 
 %global makedir %{_builddir}/%{name}-%{version}
 
@@ -165,6 +158,7 @@ find $RPM_BUILD_ROOT -name "*.a" -exec %__rm -f {} \;
 %{_datadir}/authselect/default/minimal/README
 %{_datadir}/authselect/default/minimal/REQUIREMENTS
 %{_datadir}/authselect/default/minimal/smartcard-auth
+%{_datadir}/authselect/default/minimal/switchable-auth
 %{_datadir}/authselect/default/minimal/system-auth
 %{_datadir}/authselect/default/sssd/dconf-db
 %{_datadir}/authselect/default/sssd/dconf-locks
@@ -175,6 +169,7 @@ find $RPM_BUILD_ROOT -name "*.a" -exec %__rm -f {} \;
 %{_datadir}/authselect/default/sssd/README
 %{_datadir}/authselect/default/sssd/REQUIREMENTS
 %{_datadir}/authselect/default/sssd/smartcard-auth
+%{_datadir}/authselect/default/sssd/switchable-auth
 %{_datadir}/authselect/default/sssd/system-auth
 %{_datadir}/authselect/default/winbind/dconf-db
 %{_datadir}/authselect/default/winbind/dconf-locks
@@ -185,6 +180,7 @@ find $RPM_BUILD_ROOT -name "*.a" -exec %__rm -f {} \;
 %{_datadir}/authselect/default/winbind/README
 %{_datadir}/authselect/default/winbind/REQUIREMENTS
 %{_datadir}/authselect/default/winbind/smartcard-auth
+%{_datadir}/authselect/default/winbind/switchable-auth
 %{_datadir}/authselect/default/winbind/system-auth
 %{_libdir}/libauthselect.so.*
 %{_mandir}/man5/authselect-profiles.5*
@@ -295,6 +291,11 @@ exit 0
 exit 0
 
 %changelog
+* Thu Jun 4 2026 Pavel Březina <pbrezina@redhat.com> - 1.2.7-1
+- Rebase to authselect-1.2.7
+- Disable group merging by default, use with-group-merging to enable it (RHEL-94650)
+- Add switchable-auth (RHEL-156520)
+
 * Wed Feb 5 2025 Pavel Březina <pbrezina@redhat.com> - 1.2.6-3
 - Support group merging in nsswitch.conf (RHEL-15779)
 

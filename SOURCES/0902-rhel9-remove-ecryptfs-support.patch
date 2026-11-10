@@ -1,8 +1,11 @@
-From 9da7355f1e2c8a148d4730fec4c4707c56e6dfa1 Mon Sep 17 00:00:00 2001
+From cba8255c22d9a0a6de4bd1ec5c5a134c434488c7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
 Date: Mon, 10 Jun 2019 10:53:15 +0200
-Subject: [PATCH 2/4] rhel9: remove ecryptfs support
+Subject: [PATCH 2/5] rhel9: remove ecryptfs support
 
+Patch-name: 0902-rhel9-remove-ecryptfs-support.patch
+Patch-id: 902
+From-dist-git-commit: 8461b94b1539db7f26c288e0d5d20dd71e6609bf
 ---
  profiles/nis/README                 | 3 ---
  profiles/nis/fingerprint-auth       | 1 -
@@ -26,7 +29,7 @@ Subject: [PATCH 2/4] rhel9: remove ecryptfs support
  19 files changed, 3 insertions(+), 36 deletions(-)
 
 diff --git a/profiles/nis/README b/profiles/nis/README
-index 895e8fa8650c04d41bf8bc8d6e3cda18db9bf814..71e23d61a8c1ea773c98524256a5eaad5a75d197 100644
+index 46a4b1c2b47b15a11e760e830a68255555cc0ca2..a741e4c44e927c81861ceeb0129ad8d0c91509fb 100644
 --- a/profiles/nis/README
 +++ b/profiles/nis/README
 @@ -21,9 +21,6 @@ with-mkhomedir::
@@ -52,10 +55,10 @@ index 3a2609df4ca29cdfcbff84b37576bb7b840d72b2..0b2f583a2fcf164647f7de387e9be298
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/nis/password-auth b/profiles/nis/password-auth
-index f181a58ab7792c7e1a4234e677cbb7e3d0a6548d..79fb521eb5dff4978203166491b185887d1ec744 100644
+index 927fbcbda8fa4e910e29c88a3806fb5265bbc7bc..56a51d9eebb2987da340805ddb4e4a6752ebdeb2 100644
 --- a/profiles/nis/password-auth
 +++ b/profiles/nis/password-auth
-@@ -18,7 +18,6 @@ password    required                                     pam_deny.so
+@@ -20,7 +20,6 @@ password    required                                     pam_deny.so
  
  session     optional                                     pam_keyinit.so revoke
  session     required                                     pam_limits.so
@@ -76,10 +79,10 @@ index 137cd00dc65ee9ea83123f1d3a6f7ba04f0aea04..04a11f049bc1e220c9064fba7b46eb24
  session     [success=1 default=ignore] pam_succeed_if.so service !~ gdm* service !~ su* quiet
  session     [default=1]                pam_lastlog.so nowtmp {if "with-silent-lastlog":silent|showfailed}
 diff --git a/profiles/nis/system-auth b/profiles/nis/system-auth
-index bc3f402435aafb5294dbae94096b184af51cf914..38c10c1afcf936c1d24d8edef941ae849d1186fc 100644
+index 40a1bf74aaf3d721c4d720938e57766bfe651e47..74cf6ece9ce0b1b64b122fd2309ebf5d496c4787 100644
 --- a/profiles/nis/system-auth
 +++ b/profiles/nis/system-auth
-@@ -19,7 +19,6 @@ password    required                                     pam_deny.so
+@@ -21,7 +21,6 @@ password    required                                     pam_deny.so
  
  session     optional                                     pam_keyinit.so revoke
  session     required                                     pam_limits.so
@@ -88,10 +91,10 @@ index bc3f402435aafb5294dbae94096b184af51cf914..38c10c1afcf936c1d24d8edef941ae84
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/sssd/README b/profiles/sssd/README
-index 61d5aedf65b2351cf23cea0a6b6b0932e32f0e48..ab9af237442089ded86b63942dd856397108ccf0 100644
+index 3c0bcfd365e87b86cf31d2bb3067f750d7a499c4..baa5f904b5934687751cc1626326826fb3c63399 100644
 --- a/profiles/sssd/README
 +++ b/profiles/sssd/README
-@@ -40,9 +40,6 @@ with-mkhomedir::
+@@ -35,9 +35,6 @@ with-mkhomedir::
      Enable automatic creation of home directories for users on their
      first login.
  
@@ -114,10 +117,10 @@ index 20ad3613e66ec85c7d2462d0449854e522383b3a..dc7befe7a4839a1ae5a4d21f4e523212
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/sssd/password-auth b/profiles/sssd/password-auth
-index 3e33dcc09f68055f2f87709e638005929bd577b3..858c6db357d07dc554806f4807f9b0858a649f44 100644
+index 7fe23f2312e5c34586aad31fbe79aa5409c49b78..5b235de810a838d3002013a68a85995a15ab1a8f 100644
 --- a/profiles/sssd/password-auth
 +++ b/profiles/sssd/password-auth
-@@ -28,7 +28,6 @@ password    required                                     pam_deny.so
+@@ -31,7 +31,6 @@ password    required                                     pam_deny.so
  
  session     optional                                     pam_keyinit.so revoke
  session     required                                     pam_limits.so
@@ -150,10 +153,10 @@ index 0d8bcab250633b09bce0232a5747f3a7e740d5d7..754847f2d8885ff35cbc57ec2364d82b
  session     optional                                     pam_oddjob_mkhomedir.so                                {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/sssd/system-auth b/profiles/sssd/system-auth
-index a43341120f55bad3fb07dfea1c04453d0a278329..88c49e2dd5b60847d1d19154622a8614a21e5e1f 100644
+index ce2e266146aaefbdbc6ef58a1566f36655dfb6b4..22e87d8f4ee64a4ad69d547873ae833de6ac5c41 100644
 --- a/profiles/sssd/system-auth
 +++ b/profiles/sssd/system-auth
-@@ -35,7 +35,6 @@ password    required                                     pam_deny.so
+@@ -38,7 +38,6 @@ password    required                                     pam_deny.so
  
  session     optional                                     pam_keyinit.so revoke
  session     required                                     pam_limits.so
@@ -162,7 +165,7 @@ index a43341120f55bad3fb07dfea1c04453d0a278329..88c49e2dd5b60847d1d19154622a8614
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/winbind/README b/profiles/winbind/README
-index 0048c29256f5d4064edfb84a2f4b761fd09e90f6..6f7a7cab1efc768c4c82791d6a8f00def1771d37 100644
+index 929e0cdc10b55816d14c82ca1b0f6b186e108e7b..160622af9fe9daa10291b4374a67c111efbe385a 100644
 --- a/profiles/winbind/README
 +++ b/profiles/winbind/README
 @@ -33,9 +33,6 @@ with-mkhomedir::
@@ -188,10 +191,10 @@ index e8997c6c78ce7305fa7068fb169c05c68167880d..c5485ab848989a252e4ff4b1376a4120
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/profiles/winbind/password-auth b/profiles/winbind/password-auth
-index 58705f3b15165c8d8bd4938889e3fb4d89c1a528..e84e2fcbb2bad9af6156e6e6db23f089f2b5d210 100644
+index 8d1682b9301c2b9c92292a41120f69611f148108..8b260fa06f5ed8494d1f6fac74517d3a54622693 100644
 --- a/profiles/winbind/password-auth
 +++ b/profiles/winbind/password-auth
-@@ -25,7 +25,6 @@ password    required                                     pam_deny.so
+@@ -27,7 +27,6 @@ password    required                                     pam_deny.so
  
  session     optional                                     pam_keyinit.so revoke
  session     required                                     pam_limits.so
@@ -212,10 +215,10 @@ index 137cd00dc65ee9ea83123f1d3a6f7ba04f0aea04..04a11f049bc1e220c9064fba7b46eb24
  session     [success=1 default=ignore] pam_succeed_if.so service !~ gdm* service !~ su* quiet
  session     [default=1]                pam_lastlog.so nowtmp {if "with-silent-lastlog":silent|showfailed}
 diff --git a/profiles/winbind/system-auth b/profiles/winbind/system-auth
-index 994c342441a0ed2738765a9fa7f6cc84f692d1d8..b5c5cfaa964a31b1cd8ac4cb62998c0a0a53a03e 100644
+index 612143d10fe502d7f6ed636b4fba6cc639aa66b0..33aa13efb92405393236c3511ebb351facd916f0 100644
 --- a/profiles/winbind/system-auth
 +++ b/profiles/winbind/system-auth
-@@ -26,7 +26,6 @@ password    required                                     pam_deny.so
+@@ -28,7 +28,6 @@ password    required                                     pam_deny.so
  
  session     optional                                     pam_keyinit.so revoke
  session     required                                     pam_limits.so
@@ -224,10 +227,10 @@ index 994c342441a0ed2738765a9fa7f6cc84f692d1d8..b5c5cfaa964a31b1cd8ac4cb62998c0a
  session     optional                                     pam_oddjob_mkhomedir.so                               {include if "with-mkhomedir"}
  session     [success=1 default=ignore]                   pam_succeed_if.so service in crond quiet use_uid
 diff --git a/src/compat/authcompat.py.in.in b/src/compat/authcompat.py.in.in
-index 8334293911d1d4c2d98a6d233b91fc348cf06575..55e205bae2c0b1f7892f8b286c288dfeaa26a60d 100755
+index 4beb1b8c1dee4b22c7943d029be04f5ba34d75e7..7d7a2810986fa54597258923a18c82386cdd2c37 100755
 --- a/src/compat/authcompat.py.in.in
 +++ b/src/compat/authcompat.py.in.in
-@@ -523,7 +523,6 @@ class AuthCompat:
+@@ -524,7 +524,6 @@ class AuthCompat:
              'smartcard': 'with-smartcard',
              'requiresmartcard': 'with-smartcard-required',
              'fingerprint': 'with-fingerprint',
@@ -279,5 +282,5 @@ index 3513a7e7cd3d7cc0045167e8224248c5be90ab2c..888cd4e5a0750d4e1aa5898887f5f7fd
  authconfig --enablewinbind --enablewinbindauth --winbindjoin=Administrator --updateall
  realm join -U Administrator --client-software=winbind WINBINDDOMAIN
 -- 
-2.34.1
+2.54.0
 

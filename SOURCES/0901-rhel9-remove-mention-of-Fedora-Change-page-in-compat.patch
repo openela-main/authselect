@@ -1,18 +1,23 @@
-From c3c2c3b7ffe04dc2e810c9fffdd82689543a94df Mon Sep 17 00:00:00 2001
+From 2923cc2f9773d299e619b11bd77b7594607b4fe6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Pavel=20B=C5=99ezina?= <pbrezina@redhat.com>
 Date: Tue, 30 Oct 2018 14:08:12 +0100
-Subject: [PATCH 1/4] rhel9: remove mention of Fedora Change page in compat
+Subject: [PATCH 1/5] rhel9: remove mention of Fedora Change page in compat
  tool
 
+Patch-name: 0901-rhel9-remove-mention-of-Fedora-Change-page-in-compat.patch
+Patch-id: 901
+Patch-status: |
+    # ## Downstream Patches ###
+From-dist-git-commit: 8461b94b1539db7f26c288e0d5d20dd71e6609bf
 ---
  src/compat/authcompat.py.in.in | 1 -
  1 file changed, 1 deletion(-)
 
 diff --git a/src/compat/authcompat.py.in.in b/src/compat/authcompat.py.in.in
-index 1a68d95c71b51beabe80e9b07c084ea9c2f3580d..8334293911d1d4c2d98a6d233b91fc348cf06575 100755
+index 6bea49829410e280ea06d19e265bad552ac93b02..4beb1b8c1dee4b22c7943d029be04f5ba34d75e7 100755
 --- a/src/compat/authcompat.py.in.in
 +++ b/src/compat/authcompat.py.in.in
-@@ -471,7 +471,6 @@ class AuthCompat:
+@@ -472,7 +472,6 @@ class AuthCompat:
                  "It does not provide all capabilities of authconfig.\n"))
          print(_("IMPORTANT: authconfig is replaced by authselect, "
                  "please update your scripts."))
@@ -21,5 +26,5 @@ index 1a68d95c71b51beabe80e9b07c084ea9c2f3580d..8334293911d1d4c2d98a6d233b91fc34
  
          options = self.options.getSetButUnsupported()
 -- 
-2.34.1
+2.54.0
 
